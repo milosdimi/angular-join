@@ -61,6 +61,7 @@
     text-align: center;
     opacity: 0;
     animation: fadeIn 0.5s ease-in-out 0.8s forwards;
+    position: relative;
 }
 
 .login-card h1 {
@@ -149,6 +150,39 @@
 .login-footer a:hover {
     color: var(--secondary-color);
 }
+
+/* --- SIGNUP SPECIFIC --- */
+.arrow-back {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 32px;
+    height: 32px;
+    transition: transform 100ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-back:hover {
+    transform: scale(1.1);
+}
+
+.privacy-policy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.privacy-policy a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
 
 /* --- ANIMATIONS --- */
 @keyframes moveLogo {

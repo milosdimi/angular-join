@@ -46,3 +46,8 @@ a {
 .btn-primary:hover {
     background-color: var(--secondary-color);
 }
+
+.btn-primary:disabled {
+    background-color: #959595;
+    cursor: not-allowed;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - Sign up</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    <main class="login-page">
+        <header class="login-header">
+            <img src="assets/img/join_logo_login.png" alt="Join Logo" class="logo">
+            <div class="header-signup-box">
+                <span>Already a user?</span>
+                <a href="index.html" class="btn-signup-link">Log in</a>
+            </div>
+        </header>
+
+        <section class="login-card">
+            <a href="index.html" class="arrow-back">
+                <img src="assets/img/arrow_left_icon.png" alt="Back">
+            </a>
+
+            <h1>Sign up</h1>
+            <div class="underline"></div>
+
+            <form id="signupForm" onsubmit="return false;">
+                <div class="input-container">
+                    <input type="text" id="name" placeholder="Name" required>
+                </div>
+                <div class="input-container">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="input-container">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="input-container">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+
+                <div class="privacy-policy">
+                    <input type="checkbox" id="privacyPolicy" required onchange="toggleSignupBtn()">
+                    <label for="privacyPolicy">I accept the <a href="privacy-policy.html">Privacy policy</a></label>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="btn-primary" id="signupBtn" disabled>Sign up</button>
+                </div>
+            </form>
+        </section>
+
+        <footer class="login-footer">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="legal-notice.html">Legal notice</a>
+        </footer>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
