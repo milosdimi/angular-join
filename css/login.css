@@ -1,0 +1,160 @@
+/* --- LOGIN PAGE LAYOUT --- */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+}
+
+/* --- HEADER (Logo & Sign Up) --- */
+.login-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 60px;
+}
+
+.logo {
+    width: 100px;
+    /* Später fügen wir hier die Animation hinzu */
+}
+
+.header-signup-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+}
+
+.btn-signup-link {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 100ms ease-in-out;
+}
+
+.btn-signup-link:hover {
+    background-color: var(--secondary-color);
+}
+
+/* --- LOGIN CARD --- */
+.login-card {
+    background-color: var(--white);
+    padding: 40px 60px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.login-card h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.underline {
+    width: 150px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    margin: 0 auto 30px auto;
+}
+
+/* --- FORM ELEMENTS --- */
+.input-container {
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin-bottom: 20px;
+}
+
+.input-container input {
+    flex: 1;
+    font-size: 16px;
+    width: 100%;
+}
+
+.input-container input::placeholder {
+    color: #D1D1D1;
+}
+
+.options-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 30px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* --- BUTTONS --- */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn-guest {
+    background-color: var(--white);
+    color: var(--primary-color);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid var(--primary-color);
+    transition: all 100ms ease-in-out;
+}
+
+.btn-guest:hover {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+/* --- FOOTER --- */
+.login-footer {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.login-footer a {
+    color: #A8A8A8;
+    transition: color 100ms ease-in-out;
+}
+
+.login-footer a:hover {
+    color: var(--secondary-color);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+    .login-header {
+        padding: 20px;
+    }
+
+    .login-card {
+        padding: 30px 20px;
+    }
+
+    .button-container {
+        flex-direction: column;
+    }
+}
