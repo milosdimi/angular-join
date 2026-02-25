@@ -1,0 +1,48 @@
+/* --- GLOBALE VARIABLEN --- */
+:root {
+    --primary-color: #2A3647;
+    --secondary-color: #29ABE2;
+    --bg-color: #F6F7F8;
+    --white: #FFFFFF;
+}
+
+/* --- RESET & BASIC SETUP --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-color);
+}
+
+input,
+button {
+    border: unset;
+    outline: none;
+}
+
+/* Buttons */
+button,
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* --- GLOBALE BUTTON-KLASSEN --- */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 100ms ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}

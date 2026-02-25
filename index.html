@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - Log in</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+    <main class="login-page">
+        <header class="login-header">
+            <img src="assets/img/logo-dark.svg" alt="Join Logo" class="logo">
+            <div class="header-signup-box">
+                <span>Not a Join user?</span>
+                <a href="signup.html" class="btn-signup-link">Sign up</a>
+            </div>
+        </header>
+
+        <section class="login-card">
+            <h1>Log in</h1>
+            <div class="underline"></div>
+
+            <form id="loginForm">
+                <div class="input-container">
+                    <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                
+                <div class="input-container">
+                    <input type="password" id="password" placeholder="Password" required>
+                    </div>
+
+                <div class="options-container">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe"> Remember me
+                    </label>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit" class="btn-primary">Log in</button>
+                    <button type="button" class="btn-guest" onclick="guestLogin()">Guest Log in</button>
+                </div>
+            </form>
+        </section>
+
+        <footer class="login-footer">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="legal-notice.html">Legal notice</a>
+        </footer>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
