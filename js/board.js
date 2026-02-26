@@ -29,16 +29,19 @@ async function loadTaskFormTemplate() {
 
 function renderBoard() {
     const columns = ['todo', 'inprogress', 'awaitingfeedback', 'done'];
-    
+    const searchInput = document.getElementById('searchInput');
+    const search = searchInput ? searchInput.value.toLowerCase() : '';
 
     columns.forEach(colId => {
         document.getElementById(colId).innerHTML = '';
     });
 
     tasks.forEach(task => {
-        const column = document.getElementById(task.status);
-        if (column) {
-            column.innerHTML += generateTaskHTML(task);
+        if (task.title.toLowerCase().includes(search) || task.description.toLowerCase().includes(search)) {
+            const column = document.getElementById(task.status);
+            if (column) {
+                column.innerHTML += generateTaskHTML(task);
+            }
         }
     });
 
