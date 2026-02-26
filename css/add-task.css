@@ -384,6 +384,10 @@ textarea {
     background-color: #EEE;
 }
 
+.dropdown-option span {
+    flex: 1;
+}
+
 .dropdown-option.selected {
     background-color: #2A3647;
     color: white;

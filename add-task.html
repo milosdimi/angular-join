@@ -56,7 +56,14 @@
 
                             <div class="input-group">
                                 <label>Assigned to</label>
-                                <div class="dropdown-placeholder">Select contacts to assign (WIP)</div>
+                                <div id="dropdownAssigned" class="dropdown-container" onclick="toggleContactsDropdown(event)">
+                                    <div class="dropdown-select">
+                                        <span id="dropdownSelectText">Select contacts to assign</span>
+                                        <img src="assets/img/arrow_left_icon.png" alt="▼" class="dropdown-arrow">
+                                    </div>
+                                    <div id="dropdownOptions" class="dropdown-options d-none" onclick="event.stopPropagation()"></div>
+                                </div>
+                                <div id="selectedContactsContainer" class="selected-contacts-badges"></div>
                             </div>
 
                             <div class="input-group">
