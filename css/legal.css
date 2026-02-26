@@ -16,7 +16,7 @@ body {
 /* --- HEADER / LOGO --- */
 .legal-header {
     display: flex;
-    justify-content: flex-start; /* Logo linksbündig oder center, je nach Geschmack */
+    justify-content: flex-start; 
     margin-bottom: 60px;
 }
 
@@ -28,7 +28,7 @@ body {
 .arrow-back-legal {
     position: absolute;
     top: 40px;
-    right: 40px; /* Pfeil oben rechts, wie oft bei Help/Legal üblich, oder links */
+    right: 40px;
     width: 32px;
     height: 32px;
     cursor: pointer;

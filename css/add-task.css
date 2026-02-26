@@ -146,7 +146,6 @@ textarea {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    /* Macht den weißen Haken dunkelblau (#2A3647) */
     filter: brightness(0) saturate(100%) invert(18%) sepia(12%) saturate(2374%) hue-rotate(178deg) brightness(94%) contrast(93%);
 }
 
@@ -160,6 +159,81 @@ textarea {
 /* --- FOCUS STATE LOGIC --- */
 .subtask-input-wrapper:focus-within .subtask-icons {
     display: flex;
+}
+
+/* --- SUBTASK LIST --- */
+.subtask-list {
+    list-style: none;
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+.subtask-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    font-size: 16px;
+    border-radius: 8px;
+}
+
+.subtask-item:not(.editing):hover {
+    background-color: #EEE;
+    cursor: pointer;
+}
+
+.subtask-item:not(.editing):hover .subtask-actions {
+    display: flex;
+}
+
+.subtask-actions {
+    display: none;
+    align-items: center;
+    gap: 4px;
+}
+
+.subtask-action-icon {
+    width: 20px;
+    height: 20px;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 100ms ease-in-out;
+}
+
+.subtask-action-icon:hover {
+    background-color: #dcdcdc;
+}
+
+.subtask-separator-list {
+    width: 1px;
+    height: 20px;
+    background-color: #D1D1D1;
+}
+
+.subtask-edit-input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.subtask-edit-input-wrapper input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    padding: 0;
+}
+
+.subtask-edit-input-wrapper input:focus {
+    outline: none;
+    border: none;
+}
+
+.subtask-edit-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 /* --- FOOTER & BUTTONS --- */
@@ -206,6 +280,35 @@ textarea {
     gap: 10px;
     font-size: 20px;
     padding: 16px;
+}
+
+/* --- TASK ADDED CONFIRMATION --- */
+.task-added-msg {
+    position: fixed;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 40px;
+    border-radius: 20px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    animation: slideInAndOut 1.5s ease-in-out forwards;
+}
+
+.task-added-msg img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+}
+
+@keyframes slideInAndOut {
+    0%, 100% { opacity: 0; transform: translate(-50%, 100px); }
+    10%, 90% { opacity: 1; transform: translate(-50%, 0); }
 }
 
 /* --- RESPONSIVE --- */

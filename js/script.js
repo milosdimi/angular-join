@@ -72,3 +72,18 @@ function logOut() {
     localStorage.removeItem('currentUser');
     window.location.href = 'index.html';
 }
+
+function toggleDropdown() {
+    let dropdown = document.getElementById('profileDropdown');
+    dropdown.classList.toggle('d-none');
+}
+
+// Schließt das Dropdown, wenn man daneben klickt
+window.onclick = function(event) {
+    if (!event.target.matches('.profile-icon') && !event.target.closest('.profile-dropdown')) {
+        let dropdown = document.getElementById('profileDropdown');
+        if (dropdown && !dropdown.classList.contains('d-none')) {
+            dropdown.classList.add('d-none');
+        }
+    }
+}

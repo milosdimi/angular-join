@@ -38,20 +38,20 @@
         <div class="input-group">
             <label>Prio</label>
             <div class="prio-buttons">
-                <button type="button" class="prio-btn" id="prioUrgent" onclick="setPrio('urgent')">Urgent <img src="assets/img/urgent_icon.png" alt=""></button>
+                <button type="button" class="prio-btn urgent" id="prioUrgent" onclick="setPrio('urgent')">Urgent <img src="assets/img/urgent_icon.png" alt=""></button>
                 <button type="button" class="prio-btn medium active" id="prioMedium" onclick="setPrio('medium')">Medium <img src="assets/img/medium_icon.png" alt=""></button>
-                <button type="button" class="prio-btn" id="prioLow" onclick="setPrio('low')">Low <img src="assets/img/low_icon.png" alt=""></button>
+                <button type="button" class="prio-btn low" id="prioLow" onclick="setPrio('low')">Low <img src="assets/img/low_icon.png" alt=""></button>
             </div>
         </div>
 
         <div class="input-group">
             <label for="subtask">Subtasks</label>
             <div class="subtask-input-wrapper">
-                <input type="text" id="subtask" placeholder="Add new subtask">
+                <input type="text" id="subtask" placeholder="Add new subtask" onkeydown="if(event.key === 'Enter'){addSubtask(); return false;}">
                 <div class="subtask-icons">
-                    <img src="assets/img/cancel_icon.svg" alt="Clear" class="subtask-icon-cancel">
+                    <img src="assets/img/cancel_icon.svg" alt="Clear" class="subtask-icon-cancel" onclick="clearSubtaskInput()">
                     <div class="subtask-separator"></div>
-                    <div class="subtask-icon-check-btn">
+                    <div class="subtask-icon-check-btn" onclick="addSubtask()">
                         <img src="assets/img/check_icon.png" alt="Add" class="subtask-icon-check">
                     </div>
                 </div>
@@ -64,7 +64,7 @@
 <div class="form-footer">
     <span class="required-info"><span class="required">*</span>This field is required</span>
     <div class="form-actions">
-        <button type="button" class="btn-clear">Clear <img src="assets/img/cancel_icon.svg" alt=""></button>
+        <button type="button" class="btn-clear" onclick="clearTask()">Clear <img src="assets/img/cancel_icon.svg" alt=""></button>
         <button type="submit" class="btn-primary btn-create">Create Task <img src="assets/img/check_icon.png" alt=""></button>
     </div>
 </div>
