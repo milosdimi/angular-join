@@ -72,7 +72,7 @@
                                 <label for="subtask">Subtasks</label>
                                 <div class="subtask-input-wrapper">
                                     <input type="text" id="subtask" placeholder="Add new subtask" onkeydown="if(event.key === 'Enter'){addSubtask(); return false;}">
-                                    <div class="subtask-icons">
+                                    <div class="subtask-icons" onmousedown="event.preventDefault()">
                                         <img src="assets/img/cancel_icon.svg" alt="Clear" class="subtask-icon-cancel" onclick="clearSubtaskInput()">
                                         <div class="subtask-separator"></div>
                                         <div class="subtask-icon-check-btn" onclick="addSubtask()">
