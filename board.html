@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/summary.css">
     <link rel="stylesheet" href="css/board.css">
+    <link rel="stylesheet" href="css/add-task.css">
 </head>
 <body onload="init(); initBoard()">
     
@@ -27,7 +28,7 @@
                             <div class="search-separator"></div>
                             <img src="assets/img/search_icon.png" alt="Search" class="search-icon">
                         </div>
-                        <a href="add-task.html" class="btn-primary btn-add-task">Add task <span class="plus-sign">+</span></a>
+                        <button class="btn-primary btn-add-task" onclick="openAddTaskModal()">Add task <span class="plus-sign">+</span></button>
                     </div>
                 </div>
 
@@ -35,7 +36,7 @@
                     <div class="board-column">
                         <div class="column-header">
                             <span>To do</span>
-                            <div class="plus-btn-border" onclick="window.location.href='add-task.html'">+</div>
+                            <div class="plus-btn-border" onclick="openAddTaskModal('todo')">+</div>
                         </div>
                         <div class="task-list" id="todo" ondrop="moveTo('todo')" ondragover="allowDrop(event)">
                             <div class="no-tasks">No tasks To do</div>
@@ -45,7 +46,7 @@
                     <div class="board-column">
                         <div class="column-header">
                             <span>In progress</span>
-                            <div class="plus-btn-border" onclick="window.location.href='add-task.html'">+</div>
+                            <div class="plus-btn-border" onclick="openAddTaskModal('inprogress')">+</div>
                         </div>
                         <div class="task-list" id="inprogress" ondrop="moveTo('inprogress')" ondragover="allowDrop(event)">
                             <div class="no-tasks">No tasks In progress</div>
@@ -55,7 +56,7 @@
                     <div class="board-column">
                         <div class="column-header">
                             <span>Awaiting Feedback</span>
-                            <div class="plus-btn-border" onclick="window.location.href='add-task.html'">+</div>
+                            <div class="plus-btn-border" onclick="openAddTaskModal('awaitingfeedback')">+</div>
                         </div>
                         <div class="task-list" id="awaitingfeedback" ondrop="moveTo('awaitingfeedback')" ondragover="allowDrop(event)">
                             <div class="no-tasks">No tasks Awaiting Feedback</div>
@@ -75,14 +76,26 @@
         </div>
     </div>
 
-    <!-- Task Detail Modal -->
+    <!-- Task Detail / Edit Modal -->
     <div id="taskDetailOverlay" class="overlay d-none" onclick="closeTaskDetails()">
         <div class="task-detail-modal" onclick="event.stopPropagation()">
             <!-- Content will be injected by JS -->
         </div>
     </div>
 
+    <!-- Add Task Modal -->
+    <div id="addTaskOverlay" class="overlay d-none" onclick="closeAddTaskModal()">
+        <div class="task-detail-modal" onclick="event.stopPropagation()">
+            <div class="task-detail-header">
+                <h1>Add Task</h1>
+                <img src="assets/img/cancel_icon.svg" alt="Close" class="close-icon" onclick="closeAddTaskModal()">
+            </div>
+            <!-- Content will be injected by JS -->
+        </div>
+    </div>
+
     <script src="js/script.js"></script>
+    <script src="js/add-task.js"></script>
     <script src="js/board.js"></script>
 </body>
 </html>

@@ -1,6 +1,9 @@
 let currentPrio = 'medium'; // Default priority
 let subtasks = [];
 let editingTaskId = null;
+let newTaskStatus = 'todo'; // Standard Status
+let contacts = [];
+let assignedContacts = [];
 
 /**
  * Initializes the add task page
@@ -8,10 +11,19 @@ let editingTaskId = null;
 async function initAddTask() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
+    await loadContacts();
 
     if (id) {
         editingTaskId = parseInt(id);
         prepareEditMode();
+    }
+}
+
+async function loadContacts() {
+    try {
+        contacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    } catch (e) {
+        console.error('Could not load contacts', e);
     }
 }
 
@@ -57,6 +69,9 @@ function clearTask() {
     setPrio('medium');
     subtasks = [];
     document.getElementById('subtaskList').innerHTML = '';
+    newTaskStatus = 'todo';
+    assignedContacts = [];
+    renderSelectedContactsBadges();
 }
 
 function populateForm(task) {
@@ -66,6 +81,8 @@ function populateForm(task) {
     document.getElementById('category').value = task.category;
     setPrio(task.prio);
     subtasks = task.subtasks || [];
+    assignedContacts = task.assignedContacts || [];
+    renderSelectedContactsBadges();
     renderSubtasks();
 }
 
@@ -97,7 +114,8 @@ async function createTask() {
         category: category,
         prio: currentPrio,
         subtasks: subtasks,
-        status: 'todo' // Default status for new tasks
+        status: newTaskStatus,
+        assignedContacts: assignedContacts
     };
     
     // Add the new task and save the updated list
@@ -106,9 +124,17 @@ async function createTask() {
     
     // Show confirmation and redirect
     showTaskAddedMessage();
-    setTimeout(() => {
-        window.location.href = 'board.html';
-    }, 1500);
+    
+    if (window.location.pathname.includes('board.html')) {
+        setTimeout(() => {
+            closeAddTaskModal();
+            renderBoard();
+        }, 1000);
+    } else {
+        setTimeout(() => {
+            window.location.href = 'board.html';
+        }, 1500);
+    }
 }
 
 async function saveEditedTask() {
@@ -122,12 +148,18 @@ async function saveEditedTask() {
         tasks[taskIndex].category = document.getElementById('category').value;
         tasks[taskIndex].prio = currentPrio;
         tasks[taskIndex].subtasks = subtasks;
+        tasks[taskIndex].assignedContacts = assignedContacts;
     }
 
     await localStorage.setItem('tasks', JSON.stringify(tasks));
     
     // Redirect back to board
-    window.location.href = 'board.html';
+    if (window.location.pathname.includes('board.html')) {
+        closeTaskDetails(); // Schließt das Edit-Modal
+        renderBoard();
+    } else {
+        window.location.href = 'board.html';
+    }
 }
 
 function addSubtask() {
@@ -202,4 +234,78 @@ function clearSubtaskInput() {
 function showTaskAddedMessage() {
     const msgElement = document.getElementById('taskAddedMsg');
     msgElement.classList.remove('d-none');
+}
+
+// --- CONTACTS DROPDOWN LOGIC ---
+
+function toggleContactsDropdown(event) {
+    if(event) event.stopPropagation();
+    const options = document.getElementById('dropdownOptions');
+    options.classList.toggle('d-none');
+    
+    if (!options.classList.contains('d-none')) {
+        renderContactsDropdown();
+        // Close dropdown when clicking outside
+        document.addEventListener('click', closeDropdownOnClickOutside);
+    } else {
+        document.removeEventListener('click', closeDropdownOnClickOutside);
+    }
+}
+
+function closeDropdownOnClickOutside(event) {
+    const dropdown = document.getElementById('dropdownAssigned');
+    if (dropdown && !dropdown.contains(event.target)) {
+        document.getElementById('dropdownOptions').classList.add('d-none');
+        document.removeEventListener('click', closeDropdownOnClickOutside);
+    }
+}
+
+function renderContactsDropdown() {
+    const container = document.getElementById('dropdownOptions');
+    container.innerHTML = '';
+    
+    contacts.forEach((contact, index) => {
+        const isSelected = assignedContacts.includes(contact.email);
+        container.innerHTML += /*html*/`
+            <div class="dropdown-option ${isSelected ? 'selected' : ''}" onclick="toggleContactSelection(${index})">
+                <div class="contact-badge" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>
+                <span>${contact.name}</span>
+                <input type="checkbox" ${isSelected ? 'checked' : ''}>
+            </div>
+        `;
+    });
+}
+
+function toggleContactSelection(index) {
+    const contact = contacts[index];
+    const contactIndex = assignedContacts.indexOf(contact.email);
+    
+    if (contactIndex === -1) {
+        assignedContacts.push(contact.email);
+    } else {
+        assignedContacts.splice(contactIndex, 1);
+    }
+    renderContactsDropdown();
+    renderSelectedContactsBadges();
+}
+
+function renderSelectedContactsBadges() {
+    const container = document.getElementById('selectedContactsContainer');
+    container.innerHTML = '';
+    
+    assignedContacts.forEach(email => {
+        const contact = contacts.find(c => c.email === email);
+        if (contact) {
+            container.innerHTML += `<div class="contact-badge-small" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>`;
+        }
+    });
+}
+
+function getInitials(name) {
+    let parts = name.split(' ');
+    let initials = parts[0].charAt(0);
+    if (parts.length > 1) {
+        initials += parts[parts.length - 1].charAt(0);
+    }
+    return initials.toUpperCase();
 }

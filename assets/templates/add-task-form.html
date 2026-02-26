@@ -12,17 +12,15 @@
         </div>
 
         <div class="input-group">
-            <label for="category">Category<span class="required">*</span></label>
-            <select id="category" required>
-                <option value="" disabled selected>Select task category</option>
-                <option value="Technical Task">Technical Task</option>
-                <option value="User Story">User Story</option>
-            </select>
-        </div>
-
-        <div class="input-group">
             <label>Assigned to</label>
-            <div class="dropdown-placeholder">Select contacts to assign (WIP)</div>
+            <div id="dropdownAssigned" class="dropdown-container" onclick="toggleContactsDropdown(event)">
+                <div class="dropdown-select">
+                    <span id="dropdownSelectText">Select contacts to assign</span>
+                    <img src="assets/img/arrow_left_icon.png" alt="▼" class="dropdown-arrow">
+                </div>
+                <div id="dropdownOptions" class="dropdown-options d-none" onclick="event.stopPropagation()"></div>
+            </div>
+            <div id="selectedContactsContainer" class="selected-contacts-badges"></div>
         </div>
     </div>
 
@@ -42,6 +40,15 @@
                 <button type="button" class="prio-btn medium active" id="prioMedium" onclick="setPrio('medium')">Medium <img src="assets/img/medium_icon.png" alt=""></button>
                 <button type="button" class="prio-btn low" id="prioLow" onclick="setPrio('low')">Low <img src="assets/img/low_icon.png" alt=""></button>
             </div>
+        </div>
+
+        <div class="input-group">
+            <label for="category">Category<span class="required">*</span></label>
+            <select id="category" required>
+                <option value="" disabled selected>Select task category</option>
+                <option value="Technical Task">Technical Task</option>
+                <option value="User Story">User Story</option>
+            </select>
         </div>
 
         <div class="input-group">

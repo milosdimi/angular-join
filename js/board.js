@@ -1,9 +1,11 @@
 let tasks = [];
 let currentDraggedElement;
+let taskFormTemplate = ''; // Variable für das Formular-Template
 
 async function initBoard() {
     await loadTasks();
     renderBoard();
+    await loadTaskFormTemplate(); // Template laden
 }
 
 async function loadTasks() {
@@ -13,6 +15,15 @@ async function loadTasks() {
         console.error('Could not load tasks', e);
         tasks = [];
     }
+}
+
+async function loadTaskFormTemplate() {
+    try {
+        let resp = await fetch('assets/templates/add-task-form.html');
+        if (resp.ok) {
+            taskFormTemplate = await resp.text();
+        }
+    } catch (e) { console.error('Could not load task form template', e); }
 }
 
 function renderBoard() {
@@ -120,6 +131,7 @@ function openTaskDetails(taskId) {
 
     const overlay = document.getElementById('taskDetailOverlay');
     const modal = overlay.querySelector('.task-detail-modal');
+    modal.classList.remove('large-modal'); // Detail-Ansicht ist schmal
     
     modal.innerHTML = generateTaskDetailHTML(task);
     overlay.classList.remove('d-none');
@@ -214,7 +226,55 @@ async function deleteTask(taskId) {
 }
 
 function editTask(taskId) {
-    window.location.href = `add-task.html?id=${taskId}`;
+    const task = tasks.find(t => t.id === taskId);
+    const modal = document.querySelector('#taskDetailOverlay .task-detail-modal');
+    loadContacts(); // Kontakte laden für das Dropdown
+    modal.classList.add('large-modal'); // Edit-Ansicht ist breit
+    
+    // Inject Form into existing modal
+    modal.innerHTML = `
+        <div class="task-detail-header">
+            <h1>Edit Task</h1>
+            <img src="assets/img/cancel_icon.svg" alt="Close" class="close-icon" onclick="closeTaskDetails()">
+        </div>
+        <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;">
+            ${taskFormTemplate}
+        </form>
+    `;
+
+    // Setup Edit Mode
+    editingTaskId = taskId;
+    newTaskStatus = task.status; // Status beibehalten
+    populateForm(task);
+
+    // UI Anpassungen für Edit
+    const createBtn = modal.querySelector('.btn-create');
+    createBtn.innerHTML = 'Save <img src="assets/img/check_icon.png" alt="">';
+    modal.querySelector('.btn-clear').classList.add('d-none');
+}
+
+function openAddTaskModal(status = 'todo') {
+    const overlay = document.getElementById('addTaskOverlay');
+    const modal = overlay.querySelector('.task-detail-modal');
+    loadContacts(); // Kontakte laden für das Dropdown
+    modal.classList.add('large-modal'); // Add-Ansicht ist breit
+    
+    // Inject Form
+    modal.innerHTML = `
+        <div class="task-detail-header">
+            <h1>Add Task</h1>
+            <img src="assets/img/cancel_icon.svg" alt="Close" class="close-icon" onclick="closeAddTaskModal()">
+        </div>
+        <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;">
+            ${taskFormTemplate}
+        </form>
+    `;
+    
+    newTaskStatus = status; // Status setzen (z.B. 'inprogress')
+    editingTaskId = null;
+    clearTask(); // Formular resetten
+    
+    overlay.classList.remove('d-none');
 }
 
 async function toggleSubtask(taskId, subtaskIndex) {
@@ -227,4 +287,15 @@ async function toggleSubtask(taskId, subtaskIndex) {
         renderBoard();
         openTaskDetails(taskId);
     }
+}
+
+function closeAddTaskModal() {
+    const overlay = document.getElementById('addTaskOverlay');
+    const modal = overlay.querySelector('.task-detail-modal');
+    modal.classList.add('slide-out');
+    
+    setTimeout(() => {
+        overlay.classList.add('d-none');
+        modal.classList.remove('slide-out');
+    }, 300);
 }
