@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/summary.css">
 </head>
+
 <body>
-    
+
     <div class="wrapper">
         <!-- Sidebar -->
         <nav class="sidebar">
@@ -50,12 +52,84 @@
                     <div class="profile-icon">G</div>
                 </div>
             </header>
-
             <main class="content">
-                <h1>Join 360</h1>
+                <div class="dashboard-header">
+                    <h1>Join 360</h1>
+                    <div class="header-divider"></div>
+                    <span class="header-subtitle">Key Metrics at a Glance</span>
+                </div>
+
+                <div class="dashboard-content">
+
+                    <div class="metrics-container">
+
+                        <div class="metrics-row row-2-cols">
+                            <div class="metric-card square-card">
+                                <div class="card-icon edit-icon">
+                                    <img src="assets/img/pencil-white-background.png" alt="To-do">
+                                </div>
+                                <div class="card-number-box">
+                                    <span class="card-number">1</span>
+                                    <span class="card-label">To-do</span>
+                                </div>
+                            </div>
+                            <div class="metric-card square-card">
+                                <div class="card-icon check-icon">
+                                    <img src="assets/img/check-mark-white-background.png" alt="Done">
+                                </div>
+                                <div class="card-number-box">
+                                    <span class="card-number">1</span>
+                                    <span class="card-label">Done</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="metrics-row">
+                            <div class="metric-card wide-card">
+                                <div class="urgent-left">
+                                    <div class="card-icon urgent-icon">
+                                        <img src="assets/img/urgent_summary_icon.png" alt="Urgent">
+                                    </div>
+                                    <div class="card-number-box">
+                                        <span class="card-number">1</span>
+                                        <span class="card-label">Urgent</span>
+                                    </div>
+                                </div>
+                                <div class="urgent-divider"></div>
+                                <div class="urgent-right">
+                                    <span class="urgent-date">October 16, 2022</span>
+                                    <span class="urgent-deadline-label">Upcoming Deadline</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="metrics-row row-3-cols">
+                            <div class="metric-card small-card">
+                                <span class="card-number">5</span>
+                                <span class="card-label">Tasks in<br>Board</span>
+                            </div>
+                            <div class="metric-card small-card">
+                                <span class="card-number">2</span>
+                                <span class="card-label">Tasks In<br>Progress</span>
+                            </div>
+                            <div class="metric-card small-card">
+                                <span class="card-number">2</span>
+                                <span class="card-label">Awaiting<br>Feedback</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="greeting-container">
+                        <h2 class="greeting-text">Good morning,</h2>
+                        <h2 class="greeting-name">Guest</h2>
+                    </div>
+
+                </div>
             </main>
         </div>
     </div>
 
 </body>
+
 </html>
