@@ -4,6 +4,7 @@ let taskFormTemplate = ''; // Variable für das Formular-Template
 
 async function initBoard() {
     await loadTasks();
+    await loadContacts(); // Kontakte laden, damit wir Zugriff auf Farben/Namen haben
     renderBoard();
     await loadTaskFormTemplate(); // Template laden
 }
@@ -64,6 +65,7 @@ function generateTaskHTML(task) {
     let categoryColor = getCategoryColor(task.category);
     let subtasksProgress = getSubtasksProgress(task);
     let prioIcon = `assets/img/${task.prio}_icon.png`;
+    let contactsHTML = generateContactsHTML(task.assignedContacts);
 
     return `
     <div draggable="true" ondragstart="startDragging(${task.id})" class="task-card" onclick="openTaskDetails(${task.id})">
@@ -73,7 +75,7 @@ function generateTaskHTML(task) {
         ${subtasksProgress}
         <div class="task-footer">
             <div class="task-contacts">
-                <!-- Placeholder for contacts -->
+                ${contactsHTML}
             </div>
             <div class="task-prio">
                 <img src="${prioIcon}" alt="${task.prio}">
@@ -145,6 +147,7 @@ function closeTaskDetails() {
     setTimeout(() => {
         overlay.classList.add('d-none');
         modal.classList.remove('slide-out');
+        modal.innerHTML = '';
     }, 300);
 }
 
@@ -153,6 +156,7 @@ function generateTaskDetailHTML(task) {
     let prioIcon = `assets/img/${task.prio}_icon.png`;
     let prioText = task.prio.charAt(0).toUpperCase() + task.prio.slice(1);
     let subtasksHTML = generateSubtaskListDetailHTML(task);
+    let assignedContactsHTML = generateAssignedContactsDetailHTML(task.assignedContacts);
 
     return `
         <div class="task-detail-header">
@@ -178,7 +182,9 @@ function generateTaskDetailHTML(task) {
 
         <div class="task-detail-info-row column-direction">
             <span class="task-detail-info-label">Assigned To:</span>
-            <!-- Placeholder for assigned contacts -->
+            <div class="task-detail-assigned-list">
+                ${assignedContactsHTML}
+            </div>
         </div>
 
         <div class="task-detail-info-row column-direction">
@@ -297,5 +303,37 @@ function closeAddTaskModal() {
     setTimeout(() => {
         overlay.classList.add('d-none');
         modal.classList.remove('slide-out');
+        modal.innerHTML = '';
     }, 300);
+}
+
+// --- Helper Functions for Contacts ---
+
+function generateContactsHTML(assignedContacts) {
+    if (!assignedContacts) return '';
+    let html = '';
+    assignedContacts.forEach(email => {
+        let contact = contacts.find(c => c.email === email);
+        if (contact) {
+            html += `<div class="contact-badge-board" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>`;
+        }
+    });
+    return html;
+}
+
+function generateAssignedContactsDetailHTML(assignedContacts) {
+    if (!assignedContacts || assignedContacts.length === 0) return 'No contacts assigned';
+    let html = '';
+    assignedContacts.forEach(email => {
+        let contact = contacts.find(c => c.email === email);
+        if (contact) {
+            html += `
+                <div class="assigned-contact-row">
+                    <div class="contact-badge-board" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>
+                    <span>${contact.name}</span>
+                </div>
+            `;
+        }
+    });
+    return html;
 }

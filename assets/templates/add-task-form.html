@@ -12,6 +12,25 @@
         </div>
 
         <div class="input-group">
+            <label for="dueDate">Due date<span class="required">*</span></label>
+            <input type="date" id="dueDate" required>
+        </div>
+    </div>
+
+    <div class="divider-vertical"></div>
+
+    <!-- Right Column -->
+    <div class="form-column">
+        <div class="input-group">
+            <label>Prio</label>
+            <div class="prio-buttons">
+                <button type="button" class="prio-btn urgent" id="prioUrgent" onclick="setPrio('urgent')">Urgent <img src="assets/img/urgent_icon.png" alt=""></button>
+                <button type="button" class="prio-btn medium active" id="prioMedium" onclick="setPrio('medium')">Medium <img src="assets/img/medium_icon.png" alt=""></button>
+                <button type="button" class="prio-btn low" id="prioLow" onclick="setPrio('low')">Low <img src="assets/img/low_icon.png" alt=""></button>
+            </div>
+        </div>
+
+        <div class="input-group">
             <label>Assigned to</label>
             <div id="dropdownAssigned" class="dropdown-container" onclick="toggleContactsDropdown(event)">
                 <div class="dropdown-select">
@@ -21,25 +40,6 @@
                 <div id="dropdownOptions" class="dropdown-options d-none" onclick="event.stopPropagation()"></div>
             </div>
             <div id="selectedContactsContainer" class="selected-contacts-badges"></div>
-        </div>
-    </div>
-
-    <div class="divider-vertical"></div>
-
-    <!-- Right Column -->
-    <div class="form-column">
-        <div class="input-group">
-            <label for="dueDate">Due date<span class="required">*</span></label>
-            <input type="date" id="dueDate" required>
-        </div>
-
-        <div class="input-group">
-            <label>Prio</label>
-            <div class="prio-buttons">
-                <button type="button" class="prio-btn urgent" id="prioUrgent" onclick="setPrio('urgent')">Urgent <img src="assets/img/urgent_icon.png" alt=""></button>
-                <button type="button" class="prio-btn medium active" id="prioMedium" onclick="setPrio('medium')">Medium <img src="assets/img/medium_icon.png" alt=""></button>
-                <button type="button" class="prio-btn low" id="prioLow" onclick="setPrio('low')">Low <img src="assets/img/low_icon.png" alt=""></button>
-            </div>
         </div>
 
         <div class="input-group">

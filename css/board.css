@@ -371,3 +371,41 @@
 .task-detail-btn img {
     height: 20px;
 }
+
+/* --- CONTACTS ON BOARD --- */
+.task-contacts {
+    display: flex;
+    padding-left: 10px; /* Platz für den ersten negativen Margin */
+}
+
+.contact-badge-board {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border: 1px solid white;
+    margin-left: -10px; /* Überlappungseffekt */
+}
+
+.task-detail-assigned-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.assigned-contact-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 5px;
+}
+
+.assigned-contact-row .contact-badge-board {
+    margin-left: 0; /* Keine Überlappung in der Liste */
+}

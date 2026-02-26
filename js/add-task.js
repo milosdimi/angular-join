@@ -126,8 +126,9 @@ async function createTask() {
     showTaskAddedMessage();
     
     if (window.location.pathname.includes('board.html')) {
-        setTimeout(() => {
+        setTimeout(async () => {
             closeAddTaskModal();
+            await loadTasks(); // WICHTIG: Tasks neu laden!
             renderBoard();
         }, 1000);
     } else {
@@ -156,6 +157,7 @@ async function saveEditedTask() {
     // Redirect back to board
     if (window.location.pathname.includes('board.html')) {
         closeTaskDetails(); // Schließt das Edit-Modal
+        await loadTasks(); // WICHTIG: Tasks neu laden!
         renderBoard();
     } else {
         window.location.href = 'board.html';
@@ -233,7 +235,9 @@ function clearSubtaskInput() {
 
 function showTaskAddedMessage() {
     const msgElement = document.getElementById('taskAddedMsg');
-    msgElement.classList.remove('d-none');
+    if (msgElement) {
+        msgElement.classList.remove('d-none');
+    }
 }
 
 // --- CONTACTS DROPDOWN LOGIC ---
