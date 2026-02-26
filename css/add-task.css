@@ -378,6 +378,7 @@ textarea {
     align-items: center;
     gap: 15px;
     transition: background-color 100ms;
+    color: black; /* Textfarbe sicherstellen */
 }
 
 .dropdown-option:hover {
@@ -386,6 +387,14 @@ textarea {
 
 .dropdown-option span {
     flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-option input {
+    margin-left: auto;
+    width: auto; /* WICHTIG: Verhindert, dass die Checkbox den Namen zerquetscht */
 }
 
 .dropdown-option.selected {

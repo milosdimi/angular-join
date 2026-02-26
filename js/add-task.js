@@ -250,9 +250,9 @@ function toggleContactsDropdown(event) {
     if (!options.classList.contains('d-none')) {
         renderContactsDropdown();
         // Close dropdown when clicking outside
-        document.addEventListener('click', closeDropdownOnClickOutside);
+        document.addEventListener('click', closeDropdownOnClickOutside, true);
     } else {
-        document.removeEventListener('click', closeDropdownOnClickOutside);
+        document.removeEventListener('click', closeDropdownOnClickOutside, true);
     }
 }
 
@@ -260,7 +260,7 @@ function closeDropdownOnClickOutside(event) {
     const dropdown = document.getElementById('dropdownAssigned');
     if (dropdown && !dropdown.contains(event.target)) {
         document.getElementById('dropdownOptions').classList.add('d-none');
-        document.removeEventListener('click', closeDropdownOnClickOutside);
+        document.removeEventListener('click', closeDropdownOnClickOutside, true);
     }
 }
 
