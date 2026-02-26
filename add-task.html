@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - Add Task</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/summary.css">
+    <link rel="stylesheet" href="css/add-task.css">
+</head>
+<body>
+    
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-top">
+                <img src="assets/img/join_logo_menu.png" alt="Join Logo" class="sidebar-logo">
+            </div>
+
+            <div class="sidebar-menu">
+                <a href="summary.html" class="menu-link">
+                    <img src="assets/img/summary-icon.svg" alt="Summary">
+                    <span>Summary</span>
+                </a>
+                <a href="add_task.html" class="menu-link active">
+                    <img src="assets/img/add-task-icon.svg" alt="Add Task">
+                    <span>Add Task</span>
+                </a>
+                <a href="board.html" class="menu-link">
+                    <img src="assets/img/board-icon.svg" alt="Board">
+                    <span>Board</span>
+                </a>
+                <a href="contacts.html" class="menu-link">
+                    <img src="assets/img/contacts-icon.svg" alt="Contacts">
+                    <span>Contacts</span>
+                </a>
+            </div>
+
+            <div class="sidebar-bottom">
+                <a href="privacy-policy.html" class="legal-link">Privacy Policy</a>
+                <a href="legal-notice.html" class="legal-link">Legal notice</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="main-area">
+            <header class="header">
+                <span class="header-title">Kanban Project Management Tool</span>
+                <div class="header-right">
+                    <a href="help.html" class="help-icon">?</a>
+                    <div class="profile-icon">G</div>
+                </div>
+            </header>
+
+            <main class="content">
+                <h1>Add Task</h1>
+                
+                <form id="addTaskForm" onsubmit="return false;">
+                    <div class="form-layout">
+                        <!-- Left Column -->
+                        <div class="form-column">
+                            <div class="input-group">
+                                <label for="title">Title<span class="required">*</span></label>
+                                <input type="text" id="title" placeholder="Enter a title" required>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="description">Description</label>
+                                <textarea id="description" placeholder="Enter a Description"></textarea>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="dueDate">Due date<span class="required">*</span></label>
+                                <input type="date" id="dueDate" required>
+                            </div>
+                        </div>
+
+                        <div class="divider-vertical"></div>
+
+                        <!-- Right Column -->
+                        <div class="form-column">
+                            <div class="input-group">
+                                <label>Prio</label>
+                                <div class="prio-buttons">
+                                    <button type="button" class="prio-btn" id="prioUrgent" onclick="setPrio('urgent')">Urgent <img src="assets/img/urgent_icon.png" alt=""></button>
+                                    <button type="button" class="prio-btn medium active" id="prioMedium" onclick="setPrio('medium')">Medium <img src="assets/img/medium_icon.png" alt=""></button>
+                                    <button type="button" class="prio-btn" id="prioLow" onclick="setPrio('low')">Low <img src="assets/img/low_icon.png" alt=""></button>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Assigned to</label>
+                                <div class="dropdown-placeholder">Select contacts to assign (WIP)</div>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="category">Category<span class="required">*</span></label>
+                                <select id="category" required>
+                                    <option value="" disabled selected>Select task category</option>
+                                    <option value="Technical Task">Technical Task</option>
+                                    <option value="User Story">User Story</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="subtask">Subtasks</label>
+                                <div class="subtask-input-wrapper">
+                                    <input type="text" id="subtask" placeholder="Add new subtask">
+                                    <div class="subtask-icons">
+                                        <img src="assets/img/cancel_icon.svg" alt="Clear" class="subtask-icon-cancel">
+                                        <div class="subtask-separator"></div>
+                                        <div class="subtask-icon-check-btn">
+                                            <img src="assets/img/check_icon.png" alt="Add" class="subtask-icon-check">
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul id="subtaskList" class="subtask-list"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer">
+                        <span class="required-info"><span class="required">*</span>This field is required</span>
+                        <div class="form-actions">
+                            <button type="button" class="btn-clear">Clear <img src="assets/img/cancel_icon.svg" alt=""></button>
+                            <button type="submit" class="btn-primary btn-create">Create Task <img src="assets/img/check_icon.png" alt=""></button>
+                        </div>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/add-task.js"></script>
+</body>
+</html>
