@@ -1,12 +1,32 @@
 let currentPrio = 'medium'; // Default priority
 let subtasks = [];
+let editingTaskId = null;
 
 /**
  * Initializes the add task page
  */
-function initAddTask() {
-    // Placeholder for initialization logic
-    // In the future, we can load contacts here, for example.
+async function initAddTask() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    if (id) {
+        editingTaskId = parseInt(id);
+        prepareEditMode();
+    }
+}
+
+async function prepareEditMode() {
+    document.querySelector('h1').innerText = 'Edit Task';
+    const createBtn = document.querySelector('.btn-create');
+    createBtn.innerHTML = 'Save <img src="assets/img/check_icon.png" alt="">';
+    document.querySelector('.btn-clear').classList.add('d-none'); // Hide clear button in edit mode
+
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskToEdit = tasks.find(t => t.id === editingTaskId);
+
+    if (taskToEdit) {
+        populateForm(taskToEdit);
+    }
 }
 
 /**
@@ -39,6 +59,27 @@ function clearTask() {
     document.getElementById('subtaskList').innerHTML = '';
 }
 
+function populateForm(task) {
+    document.getElementById('title').value = task.title;
+    document.getElementById('description').value = task.description;
+    document.getElementById('dueDate').value = task.dueDate;
+    document.getElementById('category').value = task.category;
+    setPrio(task.prio);
+    subtasks = task.subtasks || [];
+    renderSubtasks();
+}
+
+function handleTaskFormSubmit() {
+    // This function is called by the form's onsubmit event.
+    // It prevents the default form submission and calls the appropriate function.
+    if (editingTaskId !== null) {
+        saveEditedTask();
+    } else {
+        createTask();
+    }
+    return false; 
+}
+
 async function createTask() {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
@@ -68,6 +109,25 @@ async function createTask() {
     setTimeout(() => {
         window.location.href = 'board.html';
     }, 1500);
+}
+
+async function saveEditedTask() {
+    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskIndex = tasks.findIndex(t => t.id === editingTaskId);
+
+    if (taskIndex !== -1) {
+        tasks[taskIndex].title = document.getElementById('title').value;
+        tasks[taskIndex].description = document.getElementById('description').value;
+        tasks[taskIndex].dueDate = document.getElementById('dueDate').value;
+        tasks[taskIndex].category = document.getElementById('category').value;
+        tasks[taskIndex].prio = currentPrio;
+        tasks[taskIndex].subtasks = subtasks;
+    }
+
+    await localStorage.setItem('tasks', JSON.stringify(tasks));
+    
+    // Redirect back to board
+    window.location.href = 'board.html';
 }
 
 function addSubtask() {
