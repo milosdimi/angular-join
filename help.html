@@ -5,31 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Help</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/summary.css">
     <link rel="stylesheet" href="css/legal.css">
 </head>
-<body>
+<body onload="init()">
     
-    <div class="legal-wrapper">
-        <div class="legal-header">
-            <img src="assets/img/join_logo_login.png" alt="Join Logo" class="logo-legal">
+    <div class="wrapper">
+        <nav class="sidebar" w3-include-html="assets/templates/sidebar.html"></nav>
+
+        <div class="main-area">
+            <header class="header" w3-include-html="assets/templates/header.html"></header>
+            <main class="content">
+                <div class="legal-wrapper">
+                    <a href="#" onclick="window.history.back(); return false;" class="arrow-back-legal">
+                        <img src="assets/img/arrow_left_icon.png" alt="Back">
+                    </a>
+
+                    <h1>Help</h1>
+
+                    <h2>What is Join?</h2>
+                    <p>Join is a Kanban-based project management tool designed to help teams organize their tasks efficiently.</p>
+
+                    <h2>How to use the Board</h2>
+                    <p>The board is divided into four columns: <b>To do</b>, <b>In progress</b>, <b>Awaiting Feedback</b>, and <b>Done</b>. You can drag and drop tasks between these columns to update their status.</p>
+
+                    <h2>Creating Tasks</h2>
+                    <p>Click on "Add Task" in the sidebar or the plus button in the board columns to create a new task. Fill in the title, description, due date, and assign it to your team members.</p>
+                </div>
+            </main>
         </div>
-
-        <a href="#" onclick="window.history.back(); return false;" class="arrow-back-legal">
-            <img src="assets/img/arrow_left_icon.png" alt="Back">
-        </a>
-
-        <h1>Help</h1>
-
-        <h2>What is Join?</h2>
-        <p>Join is a Kanban-based project management tool designed to help teams organize their tasks efficiently.</p>
-
-        <h2>How to use the Board</h2>
-        <p>The board is divided into four columns: <b>To do</b>, <b>In progress</b>, <b>Awaiting Feedback</b>, and <b>Done</b>. You can drag and drop tasks between these columns to update their status.</p>
-
-        <h2>Creating Tasks</h2>
-        <p>Click on "Add Task" in the sidebar or the plus button in the board columns to create a new task. Fill in the title, description, due date, and assign it to your team members.</p>
-
     </div>
-
+    <script src="js/script.js"></script>
 </body>
 </html>
