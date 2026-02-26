@@ -1,0 +1,72 @@
+/* --- LAYOUT --- */
+body {
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.legal-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    position: relative;
+}
+
+/* --- HEADER / LOGO --- */
+.legal-header {
+    display: flex;
+    justify-content: flex-start; /* Logo linksbündig oder center, je nach Geschmack */
+    margin-bottom: 60px;
+}
+
+.logo-legal {
+    width: 100px;
+}
+
+/* --- BACK ARROW --- */
+.arrow-back-legal {
+    position: absolute;
+    top: 40px;
+    right: 40px; /* Pfeil oben rechts, wie oft bei Help/Legal üblich, oder links */
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: transform 100ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-back-legal:hover {
+    transform: scale(1.1);
+}
+
+/* --- CONTENT TYPOGRAPHY --- */
+h1 {
+    font-size: 60px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 27px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+p, li {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
