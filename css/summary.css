@@ -24,7 +24,6 @@
 
 .sidebar-logo {
     width: 100px;
-
 }
 
 .sidebar-menu {
@@ -80,203 +79,7 @@
     color: var(--secondary-color);
 }
 
-/* --- MAIN AREA --- */
-.main-area {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--bg-color);
-}
-
-.dashboard-header {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    margin-bottom: 50px;
-}
-
-.dashboard-header h1 {
-    font-size: 64px;
-    font-weight: 700;
-}
-
-.header-divider {
-    width: 3px;
-    height: 60px;
-    background-color: var(--secondary-color);
-}
-
-.header-subtitle {
-    font-size: 20px;
-    font-weight: 400;
-}
-
-.dashboard-content {
-    display: flex;
-    align-items: center;
-    gap: 60px;
-}
-
-.metrics-container {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    flex: 1;
-}
-
-.metrics-row {
-    display: flex;
-    gap: 25px;
-}
-
-.metric-card {
-    background-color: var(--white);
-    border-radius: 30px;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 125ms ease-in-out;
-}
-
-.metric-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
-}
-
-.card-number-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card-number {
-    font-size: 64px;
-    font-weight: 600;
-    line-height: 1;
-}
-
-.card-label {
-    font-size: 20px;
-    color: var(--primary-color);
-    text-align: center;
-}
-
-.square-card {
-    flex: 1;
-    height: 150px;
-    gap: 20px;
-}
-
-.small-card {
-    flex: 1;
-    height: 150px;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
-}
-
-.wide-card {
-    width: 100%;
-    height: 150px;
-    justify-content: flex-start;
-    padding: 0 40px;
-    gap: 40px;
-}
-
-.urgent-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.urgent-divider {
-    width: 2px;
-    height: 100px;
-    background-color: #D1D1D1;
-}
-
-.urgent-right {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.urgent-date {
-    font-size: 21px;
-    font-weight: 700;
-}
-
-.urgent-deadline-label {
-    font-size: 16px;
-}
-
-.card-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.edit-icon {
-    background-color: var(--primary-color);
-}
-
-.check-icon {
-    background-color: var(--primary-color);
-}
-
-.urgent-icon {
-    background-color: #FF3D00;
-}
-
-.greeting-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 40px;
-}
-
-.greeting-text {
-    font-size: 47px;
-    font-weight: 500;
-}
-
-.greeting-name {
-    font-size: 64px;
-    font-weight: 700;
-    color: var(--secondary-color);
-}
-
-/* --- HOVER EFFECTS --- */
-
-.metric-card:hover {
-    background-color: var(--primary-color);
-    transform: translateY(-5px);
-    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
-}
-
-.metric-card:hover .card-label,
-.metric-card:hover .card-number,
-.metric-card:hover .urgent-date,
-.metric-card:hover .urgent-deadline-label {
-    color: var(--white);
-}
-
-.metric-card:hover .urgent-divider {
-    background-color: var(--white);
-}
-
-.metric-card:hover .edit-icon,
-.metric-card:hover .check-icon {
-    background-color: var(--white);
-}
-
-/* HEADER */
+/* --- HEADER --- */
 .header {
     height: 90px;
     background-color: var(--white);
@@ -331,15 +134,222 @@
     cursor: pointer;
 }
 
-/* CONTENT */
+/* --- MAIN AREA & CONTENT --- */
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+}
+
 .content {
     flex: 1;
     padding: 50px;
     overflow-y: auto;
-    /* Scrollen nur im Content-Bereich */
 }
 
 .content h1 {
     font-size: 60px;
     font-weight: 700;
+}
+
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.dashboard-header h1 {
+    font-size: 64px;
+    font-weight: 700;
+}
+
+.header-divider {
+    width: 3px;
+    height: 60px;
+    background-color: var(--secondary-color);
+}
+
+.header-subtitle {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.dashboard-content {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+/* --- METRICS CARDS --- */
+.metrics-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    flex: 1;
+}
+
+.metrics-row {
+    display: flex;
+    gap: 25px;
+}
+
+.metric-card {
+    background-color: var(--white);
+    border-radius: 30px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 125ms ease-in-out;
+}
+
+.card-number-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-number {
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.card-label {
+    font-size: 20px;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.square-card {
+    flex: 1;
+    height: 150px;
+    gap: 20px;
+}
+
+.small-card {
+    flex: 1;
+    height: 150px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.wide-card {
+    width: 100%;
+    height: 150px;
+    justify-content: flex-start;
+    padding: 0 40px;
+    gap: 40px;
+}
+
+/* --- URGENT CARD DETAILS --- */
+.urgent-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.urgent-divider {
+    width: 2px;
+    height: 100px;
+    background-color: #D1D1D1;
+}
+
+.urgent-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.urgent-date {
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.urgent-deadline-label {
+    font-size: 16px;
+}
+
+/* --- CARD ICONS  --- */
+.card-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    transition: background-color 125ms ease-in-out;
+}
+
+.card-icon img {
+    width: 36px;
+    height: auto;
+}
+
+.urgent-icon {
+    background-color: #FF3D00;
+}
+
+/* --- GREETING --- */
+.greeting-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 40px;
+}
+
+.greeting-text {
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.greeting-name {
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+/* --- HOVER EFFECTS --- */
+.metric-card:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
+}
+
+.metric-card:hover .card-label,
+.metric-card:hover .card-number,
+.metric-card:hover .urgent-date,
+.metric-card:hover .urgent-deadline-label {
+    color: var(--white);
+}
+
+.metric-card:hover .urgent-divider {
+    background-color: var(--white);
+}
+
+.metric-card:hover .edit-icon,
+.metric-card:hover .check-icon {
+    background-color: var(--white);
+}
+
+/* --- ICON SWAP ON HOVER --- */
+.icon-hover {
+    display: none;
+   
+}
+
+.metric-card:hover .icon-default {
+    display: none;
+    
+}
+
+.metric-card:hover .icon-hover {
+    display: block;
+    
 }

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/summary.css">
 </head>
 
-<body>
+<body onload="initSummary()">
 
     <div class="wrapper">
         <!-- Sidebar -->
@@ -66,7 +66,8 @@
                         <div class="metrics-row row-2-cols">
                             <div class="metric-card square-card">
                                 <div class="card-icon edit-icon">
-                                    <img src="assets/img/pencil-white-background.png" alt="To-do">
+                                    <img src="assets/img/to-do-summary-icon.png" alt="To-do" class="icon-default">
+                                    <img src="assets/img/pencil-white-background.png" alt="To-do" class="icon-hover">
                                 </div>
                                 <div class="card-number-box">
                                     <span class="card-number">1</span>
@@ -75,7 +76,8 @@
                             </div>
                             <div class="metric-card square-card">
                                 <div class="card-icon check-icon">
-                                    <img src="assets/img/check-mark-white-background.png" alt="Done">
+                                    <img src="assets/img/done-summary-icon.png" alt="Done" class="icon-default">
+                                    <img src="assets/img/check-mark-white-background.png" alt="Done" class="icon-hover">
                                 </div>
                                 <div class="card-number-box">
                                     <span class="card-number">1</span>
@@ -129,7 +131,7 @@
             </main>
         </div>
     </div>
-
+    <script src="js/summary.js"></script>
 </body>
 
 </html>
