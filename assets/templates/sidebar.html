@@ -2,7 +2,7 @@
     <img src="assets/img/join_logo_menu.png" alt="Join Logo" class="sidebar-logo">
 </div>
 
-<div class="sidebar-menu">
+<div class="sidebar-menu" id="sidebar-nav">
     <a href="summary.html" class="menu-link">
         <img src="assets/img/summary-icon.svg" alt="Summary">
         <span>Summary</span>
@@ -18,6 +18,14 @@
     <a href="contacts.html" class="menu-link">
         <img src="assets/img/contacts-icon.svg" alt="Contacts">
         <span>Contacts</span>
+    </a>
+</div>
+
+<!-- Guest / Not Logged In Menu -->
+<div class="sidebar-menu d-none" id="sidebar-guest">
+    <a href="index.html" class="menu-link" onclick="logOut()">
+        <img src="assets/img/login.png" alt="Log in">
+        <span>Log in</span>
     </a>
 </div>
 

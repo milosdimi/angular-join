@@ -51,3 +51,8 @@ a {
     background-color: #959595;
     cursor: not-allowed;
 }
+
+/* --- UTILITIES --- */
+.d-none {
+    display: none !important;
+}
