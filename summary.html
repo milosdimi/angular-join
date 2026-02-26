@@ -9,49 +9,15 @@
     <link rel="stylesheet" href="css/summary.css">
 </head>
 
-<body onload="initSummary()">
+<body onload="init(); initSummary()">
 
     <div class="wrapper">
         <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="sidebar-top">
-                <img src="assets/img/join_logo_menu.png" alt="Join Logo" class="sidebar-logo">
-            </div>
-
-            <div class="sidebar-menu">
-                <a href="summary.html" class="menu-link active">
-                    <img src="assets/img/summary-icon.svg" alt="Summary">
-                    <span>Summary</span>
-                </a>
-                <a href="add-task.html" class="menu-link">
-                    <img src="assets/img/add-task-icon.svg" alt="Add Task">
-                    <span>Add Task</span>
-                </a>
-                <a href="board.html" class="menu-link">
-                    <img src="assets/img/board-icon.svg" alt="Board">
-                    <span>Board</span>
-                </a>
-                <a href="contacts.html" class="menu-link">
-                    <img src="assets/img/contacts-icon.svg" alt="Contacts">
-                    <span>Contacts</span>
-                </a>
-            </div>
-
-            <div class="sidebar-bottom">
-                <a href="privacy-policy.html" class="legal-link">Privacy Policy</a>
-                <a href="legal-notice.html" class="legal-link">Legal notice</a>
-            </div>
-        </nav>
+        <nav class="sidebar" w3-include-html="assets/templates/sidebar.html"></nav>
 
         <!-- Main Content Area -->
         <div class="main-area">
-            <header class="header">
-                <span class="header-title">Kanban Project Management Tool</span>
-                <div class="header-right">
-                    <a href="help.html" class="help-icon">?</a>
-                    <div class="profile-icon">G</div>
-                </div>
-            </header>
+            <header class="header" w3-include-html="assets/templates/header.html"></header>
             <main class="content">
                 <div class="dashboard-header">
                     <h1>Join 360</h1>
