@@ -386,16 +386,6 @@
 }
 
 /* --- MOBILE ELEMENTS (Hidden on Desktop) --- */
-.mobile-logo {
-    position: absolute;
-    top: 30px;
-    left: 20px;
-    width: 40px;
-    height: 40px;
-    z-index: 5;
-    display: none;
-}
-
 .mobile-greeting-overlay {
     position: fixed;
     top: 0;
@@ -407,7 +397,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: fadeOutUp 1s ease-in-out 2s forwards; /* 2s warten, dann 1s Animation */
+    animation: fadeOutUp 1s ease-in-out 2s forwards; 
 }
 
 .mobile-greeting-overlay .greeting-content {
@@ -426,8 +416,8 @@
 @media (max-width: 1000px) {
     .wrapper {
         flex-direction: column;
-        height: auto; /* Allow scrolling */
-        overflow-y: auto; /* Enable vertical scroll */
+        height: auto; 
+        overflow-y: auto; 
     }
 
     /* Sidebar moves to bottom */
@@ -444,7 +434,7 @@
     }
 
     .sidebar-top, .sidebar-bottom {
-        display: none; /* Hide Logo & Legal Links in Sidebar */
+        display: none; 
     }
 
     .sidebar-menu {
@@ -465,13 +455,13 @@
 
     /* Main Area adjustments */
     .main-area {
-        margin-bottom: 80px; /* Space for bottom bar */
+        margin-bottom: 80px; 
         width: 100%;
     }
 
     .header {
         padding: 0 20px;
-        justify-content: flex-end; /* Logo is absolute, so push profile right */
+        justify-content: flex-end; 
     }
 
     .help-icon {
@@ -479,15 +469,7 @@
     }
 
     .header-title {
-        display: none; /* Hide "Kanban Project Management Tool" text */
-    }
-
-    .mobile-logo {
-        display: block;
-        top: 20px;
-        left: 24px;
-        width: auto;
-        height: 48px;
+        display: none; 
     }
 
     /* Content Layout */
@@ -508,7 +490,7 @@
         width: 90px;
         height: 3px;
         background-color: var(--secondary-color);
-        order: 3; /* Move to bottom */
+        order: 3; 
         margin-top: 5px;
     }
 
@@ -522,17 +504,17 @@
     }
 
     .greeting-container {
-        display: none; /* Hide desktop greeting */
+        display: none; 
     }
 
     /* Metrics Grid */
     .metrics-row.row-3-cols {
-        flex-direction: row; /* Keep in row */
-        gap: 10px; /* Smaller gap */
+        flex-direction: row; 
+        gap: 10px;
     }
 
     .small-card {
-        height: 124px; /* Slightly smaller height */
+        height: 124px; 
         padding: 10px;
     }
 

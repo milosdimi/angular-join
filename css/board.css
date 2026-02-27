@@ -409,49 +409,148 @@
 /* --- RESPONSIVE BOARD (Mobile < 1000px) --- */
 @media (max-width: 1000px) {
     .board-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-    }
-
-    .board-header-right {
-        width: 100%;
         flex-direction: row;
+        flex-wrap: wrap; 
+        justify-content: space-between;
+        align-items: center;
         gap: 10px;
     }
 
+    .board-header h1 {
+        font-size: 40px;
+        margin-right: auto;
+        order: 1; 
+    }
+
+    .board-header-right {
+        display: contents; 
+    }
+
     .search-bar {
-        flex: 1;
-        width: auto;
+        order: 3; 
+        width: 100%;
+        margin-top: 10px;
+        height: 46px; 
+    }
+
+    .search-bar input {
+        font-size: 16px;
     }
 
     .btn-add-task {
-        padding: 8px 12px;
-        font-size: 0; /* Text verstecken */
+        order: 2; 
+        padding: 10px;
+        width: 40px;
+        height: 40px;
+        justify-content: center; 
+        font-size: 0;
     }
 
-    /* Nur das Plus-Zeichen anzeigen */
     .btn-add-task::after {
         content: "+";
         font-size: 24px;
         font-weight: 700;
     }
     
-    .btn-add-task span, 
-    .btn-add-task .plus-sign {
+    .btn-add-task span, .btn-add-task .plus-sign {
         display: none;
     }
 
     .board-columns {
-        flex-direction: column;
-        gap: 40px;
-        padding-bottom: 100px; /* Platz für die Sidebar unten */
+        flex-direction: column; 
+        overflow-x: hidden; 
+        align-items: stretch;
+        gap: 24px;
+        padding-bottom: 20px;
+        
+        
+        -ms-overflow-style: none;  
+        scrollbar-width: none;  
+    }
+    
+    
+    .task-list {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 16px;
+        padding-bottom: 10px;
+        min-height: auto; 
+        
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .task-list::-webkit-scrollbar {
+        display: none; 
     }
 
     .board-column {
         min-width: 100%;
+        width: 100%;
+    }
+
+    
+    .task-card {
+        padding: 12px;
+        border-radius: 16px;
+    }
+    
+    .task-card, .no-tasks {
+        min-width: 240px; 
+        max-width: 240px;
+    }
+
+    .task-title {
+        font-size: 14px;
+    }
+
+    .task-description {
+        font-size: 14px;
+        -webkit-line-clamp: 3; 
+    }
+    
+    .task-category {
+        font-size: 14px;
+        padding: 4px 12px;
+    }
+
+
+    .mobile-move-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .mobile-move-options-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .mobile-move-option {
+        padding: 8px 16px;
+        background-color: #F0F0F0;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        border: 1px solid #D1D1D1;
+    }
+
+    .mobile-move-option:hover {
+        background-color: var(--secondary-color);
+        color: white;
+        border-color: var(--secondary-color);
     }
 }
+
+
+@media (min-width: 1001px) {
+    .mobile-move-container {
+        display: none;
+    }
+}
+
 
 .assigned-contact-row .contact-badge-board {
     margin-left: 0;

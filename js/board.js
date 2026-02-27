@@ -1,12 +1,12 @@
 let tasks = [];
 let currentDraggedElement;
-let taskFormTemplate = ''; // Variable für das Formular-Template
+let taskFormTemplate = ''; 
 
 async function initBoard() {
     await loadTasks();
-    await loadContacts(); // Kontakte laden, damit wir Zugriff auf Farben/Namen haben
+    await loadContacts(); 
     renderBoard();
-    await loadTaskFormTemplate(); // Template laden
+    await loadTaskFormTemplate(); 
 }
 
 async function loadTasks() {
@@ -136,7 +136,7 @@ function openTaskDetails(taskId) {
 
     const overlay = document.getElementById('taskDetailOverlay');
     const modal = overlay.querySelector('.task-detail-modal');
-    modal.classList.remove('large-modal'); // Detail-Ansicht ist schmal
+    modal.classList.remove('large-modal'); 
     
     modal.innerHTML = generateTaskDetailHTML(task);
     overlay.classList.remove('d-none');
@@ -160,6 +160,7 @@ function generateTaskDetailHTML(task) {
     let prioText = task.prio.charAt(0).toUpperCase() + task.prio.slice(1);
     let subtasksHTML = generateSubtaskListDetailHTML(task);
     let assignedContactsHTML = generateAssignedContactsDetailHTML(task.assignedContacts);
+    let mobileMoveOptions = generateMobileMoveOptions(task);
 
     return `
         <div class="task-detail-header">
@@ -196,6 +197,8 @@ function generateTaskDetailHTML(task) {
                 ${subtasksHTML}
             </ul>
         </div>
+        
+        ${mobileMoveOptions}
 
         <div class="task-detail-footer">
             <div class="task-detail-btn" onclick="deleteTask(${task.id})">
@@ -206,6 +209,30 @@ function generateTaskDetailHTML(task) {
                 <img src="assets/img/edit_icon.svg" alt="Edit">
                 <span>Edit</span>
             </div>
+        </div>
+    `;
+}
+
+function generateMobileMoveOptions(task) {
+    
+    const statuses = [
+        { id: 'todo', label: 'To Do' },
+        { id: 'inprogress', label: 'In Progress' },
+        { id: 'awaitingfeedback', label: 'Awaiting Feedback' },
+        { id: 'done', label: 'Done' }
+    ];
+
+    
+    const options = statuses.filter(s => s.id !== task.status).map(s => `
+        <div class="mobile-move-option" onclick="moveToStatus(${task.id}, '${s.id}')">
+            Move to ${s.label}
+        </div>
+    `).join('');
+
+    return `
+        <div class="mobile-move-container">
+            <span class="task-detail-info-label">Move to:</span>
+            <div class="mobile-move-options-list">${options}</div>
         </div>
     `;
 }
@@ -227,6 +254,16 @@ function generateSubtaskListDetailHTML(task) {
     return html;
 }
 
+async function moveToStatus(taskId, newStatus) {
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
+    if (taskIndex !== -1) {
+        tasks[taskIndex].status = newStatus;
+        await localStorage.setItem('tasks', JSON.stringify(tasks));
+        closeTaskDetails();
+        renderBoard();
+    }
+}
+
 async function deleteTask(taskId) {
     tasks = tasks.filter(t => t.id !== taskId);
     await localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -237,10 +274,10 @@ async function deleteTask(taskId) {
 function editTask(taskId) {
     const task = tasks.find(t => t.id === taskId);
     const modal = document.querySelector('#taskDetailOverlay .task-detail-modal');
-    loadContacts(); // Kontakte laden für das Dropdown
-    modal.classList.add('large-modal'); // Edit-Ansicht ist breit
+    loadContacts(); 
+    modal.classList.add('large-modal'); 
     
-    // Inject Form into existing modal
+   
     modal.innerHTML = `
         <div class="task-detail-header">
             <h1>Edit Task</h1>
@@ -253,10 +290,10 @@ function editTask(taskId) {
 
     // Setup Edit Mode
     editingTaskId = taskId;
-    newTaskStatus = task.status; // Status beibehalten
+    newTaskStatus = task.status;
     populateForm(task);
 
-    // UI Anpassungen für Edit
+    
     const createBtn = modal.querySelector('.btn-create');
     createBtn.innerHTML = 'Save <img src="assets/img/check_icon.png" alt="">';
     modal.querySelector('.btn-clear').classList.add('d-none');
@@ -265,8 +302,8 @@ function editTask(taskId) {
 function openAddTaskModal(status = 'todo') {
     const overlay = document.getElementById('addTaskOverlay');
     const modal = overlay.querySelector('.task-detail-modal');
-    loadContacts(); // Kontakte laden für das Dropdown
-    modal.classList.add('large-modal'); // Add-Ansicht ist breit
+    loadContacts(); 
+    modal.classList.add('large-modal'); 
     
     // Inject Form
     modal.innerHTML = `
@@ -279,10 +316,10 @@ function openAddTaskModal(status = 'todo') {
         </form>
     `;
     
-    newTaskStatus = status; // Status setzen (z.B. 'inprogress')
+    newTaskStatus = status; 
     editingTaskId = null;
-    clearTask(); // Formular resetten
-    setMinDate(); // Datum begrenzen
+    clearTask(); 
+    setMinDate(); 
     
     overlay.classList.remove('d-none');
 }
