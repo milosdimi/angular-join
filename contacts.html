@@ -47,6 +47,10 @@
     <!-- Add Contact Overlay -->
     <div id="addContactOverlay" class="overlay d-none" onclick="closeAddContact()">
         <div class="add-contact-card" onclick="event.stopPropagation()">
+            <div class="close-icon-container">
+                <img src="assets/img/cancel_icon.svg" alt="Close" class="close-icon" onclick="closeAddContact()">
+            </div>
+
             <div class="add-contact-left">
                 <img src="assets/img/join_logo_menu.png" alt="Join Logo" class="add-contact-logo">
                 <h2 id="contactModalTitle">Add contact</h2>
@@ -55,10 +59,6 @@
             </div>
             
             <div class="add-contact-right">
-                <div class="close-icon-container">
-                    <img src="assets/img/cancel_icon.svg" alt="Close" class="close-icon" onclick="closeAddContact()">
-                </div>
-
                 <div class="add-contact-form-container">
                     <div id="contactModalAvatar" class="add-contact-user-img">
                         <img src="assets/img/person.svg" alt="User" class="user-icon-placeholder">

@@ -1,7 +1,7 @@
 /* --- LAYOUT --- */
 .contacts-container {
     display: flex;
-    padding: 0 !important; 
+    padding: 0 !important;
     height: calc(100vh - 90px);
     overflow: hidden;
 }
@@ -59,7 +59,7 @@
 }
 
 .contact-item:hover {
-    background-color: #F0F0F0; 
+    background-color: #F0F0F0;
 }
 
 .contact-avatar {
@@ -136,7 +136,7 @@
     justify-content: center;
     align-items: center;
     border: 3px solid white;
-    box-shadow: 0px 0px 4px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
 }
 
@@ -220,16 +220,32 @@
     border-radius: 30px;
     overflow: hidden;
     animation: slideIn 0.4s ease-out;
+    position: relative;
+
 }
 
 @keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 @keyframes slideOut {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(100%); opacity: 0; }
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
 }
 
 .add-contact-card.slide-out {
@@ -274,6 +290,7 @@
     width: 60%;
     padding: 40px 60px;
     position: relative;
+
     display: flex;
     align-items: center;
 }
@@ -282,6 +299,7 @@
     position: absolute;
     top: 30px;
     right: 30px;
+    z-index: 10;
 }
 
 .close-icon {
@@ -310,13 +328,13 @@
     justify-content: center;
     align-items: center;
     border: 3px solid white;
-    box-shadow: 0px 0px 4px rgba(0,0,0,0.1);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
 }
 
 .user-icon-placeholder {
     width: 60px;
     height: 60px;
-    filter: brightness(0) invert(1); 
+    filter: brightness(0) invert(1);
 }
 
 form {
@@ -337,9 +355,17 @@ form {
     background-size: 20px;
 }
 
-.input-name { background-image: url('../assets/img/user_icon.png'); }
-.input-email { background-image: url('../assets/img/mail_icon.png'); }
-.input-phone { background-image: url('../assets/img/phone_icon.png'); }
+.input-name {
+    background-image: url('../assets/img/user_icon.png');
+}
+
+.input-email {
+    background-image: url('../assets/img/mail_icon.png');
+}
+
+.input-phone {
+    background-image: url('../assets/img/phone_icon.png');
+}
 
 .add-contact-actions {
     display: flex;
@@ -362,8 +388,13 @@ form {
 
 /* --- ANIMATIONS --- */
 @keyframes slideInBottom {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
 }
 
 /* --- MOBILE ELEMENTS (Hidden on Desktop) --- */
@@ -383,7 +414,7 @@ form {
 @media (max-width: 1000px) {
     .contacts-container {
         flex-direction: column;
-        height: calc(100vh - 80px - 90px); 
+        height: calc(100vh - 80px - 90px);
         margin-bottom: 80px;
     }
 
@@ -395,20 +426,24 @@ form {
         box-shadow: none;
     }
 
-    
+    .contact-avatar-large {
+        width: 90px;
+        height: 90px;
+        font-size: 32px;
+    }
     .btn-add-contact {
         position: fixed;
-        bottom: 100px; 
+        bottom: 100px;
         right: 20px;
         width: 60px;
         height: 60px;
         border-radius: 50%;
         padding: 0;
-        font-size: 0; 
+        font-size: 0;
         display: flex;
-        justify-content: center; 
-        align-items: center;     
-        box-shadow: 0px 4px 4px rgba(0,0,0,0.2);
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
         z-index: 90;
     }
 
@@ -419,13 +454,13 @@ form {
 
     /* DETAIL VIEW (Hidden by default) */
     .contact-detail-view {
-        display: none; 
+        display: none;
         padding: 40px 20px;
         height: 100%;
         position: relative;
     }
 
-    
+
     .show-mobile-details .contact-list-container {
         display: none;
     }
@@ -434,7 +469,7 @@ form {
         display: block;
     }
 
-    
+
     .contacts-header {
         flex-direction: column;
         align-items: flex-start;
@@ -455,10 +490,18 @@ form {
         width: 90px;
         height: 3px;
         background-color: var(--secondary-color);
-        display: block; 
+        display: block;
     }
 
-    
+    .contact-detail-name {
+        font-size: 40px;
+    }
+
+    .contact-detail-header {
+        gap: 30px;
+    }
+
+
     .mobile-back-arrow {
         display: block;
         position: absolute;
@@ -470,7 +513,7 @@ form {
     }
 
     .contact-detail-actions {
-        display: none; 
+        display: none;
     }
 
     .mobile-menu-btn {
@@ -486,22 +529,22 @@ form {
         border-radius: 50%;
         cursor: pointer;
         z-index: 90;
-        box-shadow: 0px 4px 4px rgba(0,0,0,0.2);
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
     }
 
     .mobile-menu-options {
         position: fixed;
         bottom: 100px;
-        right: 85px; 
+        right: 85px;
         background-color: white;
         padding: 10px;
         border-radius: 20px 20px 0 20px;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         z-index: 90;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        transform: scale(0); 
+        transform: scale(0);
         transform-origin: bottom right;
         transition: transform 0.2s ease-in-out;
     }
@@ -513,53 +556,65 @@ form {
     /* --- MODAL MOBILE (Slide Up) --- */
     .add-contact-card {
         flex-direction: column;
-        width: 100%;
-        height: 100%;
-        border-radius: 0;
+        width: 90%;
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+        border-radius: 30px;
         animation: slideInBottom 0.4s ease-out;
     }
 
     .add-contact-left {
         width: 100%;
-        height: 40%;
-        padding: 60px 20px;
+        height: auto;
+        padding: 25px 20px;
+        padding: 64px 24px;
         align-items: flex-start;
         border-radius: 0;
     }
 
     .add-contact-right {
         width: 100%;
-        height: 60%;
+        height: auto;
         padding: 20px;
         border-radius: 0;
         display: flex;
-        align-items: flex-start; 
+        align-items: flex-start;
+    }
+
+    .add-contact-logo {
+        display: none;
+    }
+
+    .add-contact-left h2 {
+        font-size: 32px;
+    }
+
+    .add-contact-left p {
+        font-size: 16px;
     }
 
     .add-contact-form-container {
         flex-direction: column;
-        gap: 20px;
-        margin-top: 40px; 
+        gap: 15px;
+        margin-top: 30px;
+        margin-top: 50px;
+
     }
 
     .add-contact-user-img {
         position: absolute;
-        top: -60px; 
+        width: 100px;
+        height: 100px;
+        top: -50px;
         left: 50%;
         transform: translateX(-50%);
         z-index: 5;
-    }
-
-    
-    .close-icon-container {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        z-index: 10;
+        font-size: 38px;
     }
 
     .close-icon {
-        filter: brightness(0) invert(1); 
+        filter: brightness(0) invert(1);
     }
 
     .add-contact-actions {
@@ -567,19 +622,24 @@ form {
         justify-content: center;
     }
 
+    .input-contact {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
     .btn-create-contact {
         padding: 16px;
     }
 
     .btn-transparent {
-        display: none; 
+        display: none;
     }
 }
 
 .btn-transparent:hover {
     border-color: var(--secondary-color);
     color: var(--secondary-color);
-    box-shadow: 0px 4px 4px rgba(0,0,0,0.1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn-create-contact {

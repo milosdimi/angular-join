@@ -116,7 +116,12 @@ function toggleMobileMenu() {
 function openAddContact() {
     editingContactIndex = null;
     document.getElementById('contactModalTitle').innerText = 'Add contact';
-    document.getElementById('contactModalSubmitBtn').innerHTML = 'Create contact <img src="assets/img/check_icon.png" alt="">';
+    
+    const actionsDiv = document.querySelector('.add-contact-actions');
+    actionsDiv.innerHTML = `
+        <button type="button" class="btn-transparent" onclick="closeAddContact()">Cancel <img src="assets/img/cancel_icon.svg" alt=""></button>
+        <button type="submit" id="contactModalSubmitBtn" class="btn-primary btn-create-contact">Create contact <img src="assets/img/check_icon.png" alt=""></button>
+    `;
 
     document.getElementById('contactForm').reset();
     const avatar = document.getElementById('contactModalAvatar');
@@ -124,6 +129,7 @@ function openAddContact() {
     avatar.style.backgroundColor = '#D1D1D1';
 
     document.getElementById('addContactOverlay').classList.remove('d-none');
+    document.body.classList.add('no-scroll'); 
 }
 
 function openEditContact(index) {
@@ -131,7 +137,12 @@ function openEditContact(index) {
     const contact = contacts[index];
 
     document.getElementById('contactModalTitle').innerText = 'Edit contact';
-    document.getElementById('contactModalSubmitBtn').innerHTML = 'Save <img src="assets/img/check_icon.png" alt="">';
+    
+    const actionsDiv = document.querySelector('.add-contact-actions');
+    actionsDiv.innerHTML = `
+        <button type="button" class="btn-transparent" onclick="deleteContact(${index}); closeAddContact()" style="display:flex; justify-content:center; padding: 16px;">Delete</button>
+        <button type="submit" id="contactModalSubmitBtn" class="btn-primary btn-create-contact">Save <img src="assets/img/check_icon.png" alt=""></button>
+    `;
 
     document.getElementById('contactName').value = contact.name;
     document.getElementById('contactEmail').value = contact.email;
@@ -142,6 +153,7 @@ function openEditContact(index) {
     avatar.style.backgroundColor = contact.color;
 
     document.getElementById('addContactOverlay').classList.remove('d-none');
+    document.body.classList.add('no-scroll'); 
 }
 
 function closeAddContact() {
@@ -152,6 +164,7 @@ function closeAddContact() {
     setTimeout(() => {
         overlay.classList.add('d-none');
         card.classList.remove('slide-out');
+        document.body.classList.remove('no-scroll'); 
     }, 300);
 }
 
