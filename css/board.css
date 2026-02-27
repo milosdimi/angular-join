@@ -406,6 +406,53 @@
     padding: 5px;
 }
 
+/* --- RESPONSIVE BOARD (Mobile < 1000px) --- */
+@media (max-width: 1000px) {
+    .board-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .board-header-right {
+        width: 100%;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .search-bar {
+        flex: 1;
+        width: auto;
+    }
+
+    .btn-add-task {
+        padding: 8px 12px;
+        font-size: 0; /* Text verstecken */
+    }
+
+    /* Nur das Plus-Zeichen anzeigen */
+    .btn-add-task::after {
+        content: "+";
+        font-size: 24px;
+        font-weight: 700;
+    }
+    
+    .btn-add-task span, 
+    .btn-add-task .plus-sign {
+        display: none;
+    }
+
+    .board-columns {
+        flex-direction: column;
+        gap: 40px;
+        padding-bottom: 100px; /* Platz für die Sidebar unten */
+    }
+
+    .board-column {
+        min-width: 100%;
+    }
+}
+
 .assigned-contact-row .contact-badge-board {
     margin-left: 0;
 }

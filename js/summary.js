@@ -4,6 +4,7 @@
 async function initSummary() {
     setGreeting();
     await updateSummaryMetrics();
+    checkMobileGreeting();
 }
 
 
@@ -101,4 +102,32 @@ function animateNumber(element, endValue, duration) {
     }
 
     requestAnimationFrame(animation);
+}
+
+/**
+ * Handles the mobile greeting animation.
+ */
+function checkMobileGreeting() {
+    // Check if screen width is mobile (< 1000px)
+    // AND check if we haven't shown the greeting in this session yet
+    if (window.innerWidth < 1000 && !sessionStorage.getItem('mobileGreetingShown')) {
+        const overlay = document.getElementById('mobileGreeting');
+        if (!overlay) return;
+        
+        const content = overlay.querySelector('.greeting-content');
+        const user = localStorage.getItem('currentUser') || 'Guest';
+        const timeText = getTimeGreeting();
+
+        content.innerHTML = `${timeText},<br><span style="color: var(--secondary-color); font-size: 48px;">${user}</span>`;
+        
+        overlay.classList.remove('d-none');
+        
+        // Mark as shown in session storage
+        sessionStorage.setItem('mobileGreetingShown', 'true');
+
+        // Remove from DOM after animation to enable clicking
+        setTimeout(() => {
+            overlay.classList.add('d-none');
+        }, 3000); // 2s wait + 1s animation
+    }
 }
