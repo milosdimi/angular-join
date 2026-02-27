@@ -60,7 +60,15 @@ function showContactDetails(index) {
     const contact = contacts[index];
     const content = document.getElementById('contactDetail');
 
+
+    if (window.innerWidth < 1000) {
+        document.querySelector('.contacts-container').classList.add('show-mobile-details');
+    }
+
     content.innerHTML = /*html*/`
+        
+        <img src="assets/img/arrow_left_icon.png" class="mobile-back-arrow" onclick="closeMobileDetails()">
+
         <div class="contact-detail-header">
             <div class="contact-avatar-large" style="background-color: ${contact.color};">${getInitials(contact.name)}</div>
             <div class="contact-detail-name-box">
@@ -81,7 +89,28 @@ function showContactDetails(index) {
             <span class="info-label">Phone</span>
             <a href="tel:${contact.phone}" class="info-value-phone">${contact.phone}</a>
         </div>
+
+        <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <img src="assets/img/more_vert_icon.svg" alt="Options">
+        </div>
+
+        <div id="mobileMenuOptions" class="mobile-menu-options">
+            <div class="action-btn" onclick="openEditContact(${index})"><img src="assets/img/edit_icon.svg" alt=""> Edit</div>
+            <div class="action-btn" onclick="deleteContact(${index})"><img src="assets/img/delete_icon.svg" alt=""> Delete</div>
+        </div>
     `;
+}
+
+function closeMobileDetails() {
+    document.querySelector('.contacts-container').classList.remove('show-mobile-details');
+
+    const menu = document.getElementById('mobileMenuOptions');
+    if (menu) menu.classList.remove('show');
+}
+
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenuOptions');
+    if (menu) menu.classList.toggle('show');
 }
 
 function openAddContact() {
@@ -123,7 +152,7 @@ function closeAddContact() {
     setTimeout(() => {
         overlay.classList.add('d-none');
         card.classList.remove('slide-out');
-    }, 300); 
+    }, 300);
 }
 
 function handleContactFormSubmit() {
@@ -171,4 +200,5 @@ async function deleteContact(index) {
     await localStorage.setItem('contacts', JSON.stringify(contacts));
     renderContactList();
     document.getElementById('contactDetail').innerHTML = '';
+    closeMobileDetails(); 
 }
