@@ -56,3 +56,15 @@ a {
 .d-none {
     display: none !important;
 }
+
+/* --- HEADER PROFILE --- */
+.profile-icon {
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+}
+
+.profile-icon:hover {
+    color: var(--secondary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
