@@ -12,11 +12,29 @@ async function initAddTask() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
     await loadContacts();
+    setMinDate();
 
     if (id) {
         editingTaskId = parseInt(id);
         prepareEditMode();
     }
+}
+
+/**
+ * Sets the minimum date for the due date input to today.
+ */
+function setMinDate() {
+    const dateInput = document.getElementById('dueDate');
+    if (!dateInput) return;
+
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.setAttribute('min', today);
+
+    dateInput.addEventListener('blur', function() {
+        if (this.value && this.value < today) {
+            this.value = today;
+        }
+    });
 }
 
 async function loadContacts() {

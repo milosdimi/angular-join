@@ -282,6 +282,7 @@ function openAddTaskModal(status = 'todo') {
     newTaskStatus = status; // Status setzen (z.B. 'inprogress')
     editingTaskId = null;
     clearTask(); // Formular resetten
+    setMinDate(); // Datum begrenzen
     
     overlay.classList.remove('d-none');
 }

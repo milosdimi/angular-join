@@ -401,7 +401,7 @@ textarea {
     align-items: center;
     gap: 15px;
     transition: background-color 100ms;
-    color: black; /* Textfarbe sicherstellen */
+    color: black; 
 }
 
 .dropdown-option:hover {
@@ -417,7 +417,7 @@ textarea {
 
 .dropdown-option input {
     margin-left: auto;
-    width: auto; /* WICHTIG: Verhindert, dass die Checkbox den Namen zerquetscht */
+    width: auto; 
 }
 
 .dropdown-option.selected {
@@ -443,5 +443,5 @@ textarea {
     gap: 5px;
     margin-top: 5px;
     flex-wrap: wrap;
-    min-height: 35px;
+    min-height: 0;
 }
