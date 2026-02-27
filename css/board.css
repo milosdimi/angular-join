@@ -547,6 +547,13 @@
         color: white;
         border-color: var(--secondary-color);
     }
+
+    /* Klick-Feedback für Touchscreens */
+    .mobile-move-option:active {
+        background-color: var(--secondary-color);
+        color: white;
+        transform: scale(0.98);
+    }
 }
 
 
