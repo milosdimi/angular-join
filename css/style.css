@@ -85,3 +85,8 @@ a {
         display: block; 
     }
 }
+
+/* --- SCROLL LOCK --- */
+.no-scroll {
+    overflow: hidden;
+}

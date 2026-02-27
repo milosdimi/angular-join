@@ -140,6 +140,7 @@ function openTaskDetails(taskId) {
     
     modal.innerHTML = generateTaskDetailHTML(task);
     overlay.classList.remove('d-none');
+    document.body.classList.add('no-scroll'); 
 }
 
 function closeTaskDetails() {
@@ -151,6 +152,7 @@ function closeTaskDetails() {
         overlay.classList.add('d-none');
         modal.classList.remove('slide-out');
         modal.innerHTML = '';
+        document.body.classList.remove('no-scroll'); 
     }, 300);
 }
 
@@ -322,6 +324,7 @@ function openAddTaskModal(status = 'todo') {
     setMinDate(); 
     
     overlay.classList.remove('d-none');
+    document.body.classList.add('no-scroll'); // Scroll sperren
 }
 
 async function toggleSubtask(taskId, subtaskIndex) {
@@ -345,6 +348,7 @@ function closeAddTaskModal() {
         overlay.classList.add('d-none');
         modal.classList.remove('slide-out');
         modal.innerHTML = '';
+        document.body.classList.remove('no-scroll'); // Scroll freigeben
     }, 300);
 }
 
