@@ -85,16 +85,37 @@
     border-radius: 10px;
     padding: 12px 20px;
     margin-bottom: 20px;
+    position: relative; /* Wichtig für die Icon-Positionierung */
 }
 
 .input-container input {
     flex: 1;
     font-size: 16px;
     width: 100%;
+    padding-right: 30px; /* Platz für das Icon schaffen */
 }
 
 .input-container input::placeholder {
     color: #D1D1D1;
+}
+
+.input-icon {
+    position: absolute;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+.validation-msg {
+    color: #FF8190;
+    font-size: 12px;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%;
+    padding-left: 20px;
 }
 
 .options-container {

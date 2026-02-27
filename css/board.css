@@ -112,7 +112,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    min-height: 200px; /* Drop area height */
+    min-height: 200px; 
     padding-bottom: 20px;
 }
 
@@ -132,7 +132,7 @@
     background-color: white;
     padding: 16px;
     border-radius: 24px;
-    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.08);
     cursor: grab;
     display: flex;
     flex-direction: column;
@@ -230,7 +230,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    transition: all 0.3s ease-in-out; /* Weiche Animation für Größenänderung */
+    transition: all 0.3s ease-in-out;
 }
 
 .task-detail-modal.large-modal {
@@ -375,7 +375,7 @@
 /* --- CONTACTS ON BOARD --- */
 .task-contacts {
     display: flex;
-    padding-left: 10px; /* Platz für den ersten negativen Margin */
+    padding-left: 10px; 
 }
 
 .contact-badge-board {
@@ -388,7 +388,7 @@
     align-items: center;
     font-size: 12px;
     border: 1px solid white;
-    margin-left: -10px; /* Überlappungseffekt */
+    margin-left: -10px; 
 }
 
 .task-detail-assigned-list {
@@ -407,5 +407,5 @@
 }
 
 .assigned-contact-row .contact-badge-board {
-    margin-left: 0; /* Keine Überlappung in der Liste */
+    margin-left: 0;
 }

@@ -22,14 +22,18 @@
             <h1>Log in</h1>
             <div class="underline"></div>
 
-            <form id="loginForm">
+            <form id="loginForm" onsubmit="login(); return false;">
                 <div class="input-container">
                     <input type="email" id="email" placeholder="Email" required>
-                    </div>
+                    <img src="assets/img/mail_icon.png" alt="Email" class="input-icon">
+                </div>
                 
                 <div class="input-container">
-                    <input type="password" id="password" placeholder="Password" required>
-                    </div>
+                    <input type="password" id="password" placeholder="Password" required oninput="updatePasswordIcon('password')">
+                    <img src="assets/img/lock_icon.png" alt="Password" class="input-icon" onclick="togglePasswordVisibility('password', this)">
+                </div>
+
+                <div id="msgBox" class="validation-msg d-none">Email or password is incorrect.</div>
 
                 <div class="options-container">
                     <label class="remember-me">
