@@ -219,7 +219,7 @@ textarea {
     height: 20px;
     padding: 3px;
     cursor: pointer;
-    border-radius: 50%;
+    border-radius: 4px;
     transition: background-color 100ms ease-in-out;
 }
 
@@ -274,6 +274,8 @@ textarea {
 
 .form-actions {
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     gap: 20px;
 }
 
@@ -366,7 +368,7 @@ textarea {
         justify-content: center;
         align-items: center;
         margin-top: 20px;
-        margin-bottom: 100px; 
+        margin-bottom: 12px; 
         background-color: transparent;
         box-shadow: none;
         padding: 0;
@@ -397,6 +399,13 @@ textarea {
     .btn-create {
         flex: 1;
         justify-content: center;
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .prio-btn {
+        padding: 12px 6px;
+        font-size: 16px;
     }
 }
 
@@ -408,6 +417,14 @@ textarea {
     box-shadow: none;
     background-color: transparent;
     width: auto;
+}
+
+.task-detail-modal .form-actions {
+    position: static;
+    padding: 0;
+    box-shadow: none;
+    width: 100%;
+    background-color: transparent;
 }
 
 .task-detail-modal .form-layout {

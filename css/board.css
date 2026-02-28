@@ -231,6 +231,14 @@
     flex-direction: column;
     gap: 20px;
     transition: all 0.3s ease-in-out;
+    
+    
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+}
+
+.task-detail-modal::-webkit-scrollbar {
+    display: none; 
 }
 
 .task-detail-modal.large-modal {
@@ -548,11 +556,19 @@
         border-color: var(--secondary-color);
     }
 
-    /* Klick-Feedback für Touchscreens */
+    
     .mobile-move-option:active {
         background-color: var(--secondary-color);
         color: white;
         transform: scale(0.98);
+    }
+
+    
+    .task-detail-modal {
+        width: 100%;
+        border-radius: 24px;
+        padding: 16px;
+        width: 95vw;
     }
 }
 

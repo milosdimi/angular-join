@@ -47,7 +47,7 @@
     gap: 10px;
     transition: all 100ms ease-in-out;
     cursor: pointer;
-    border-radius: 16px;
+
 }
 
 .menu-link img {
@@ -451,6 +451,7 @@
         gap: 5px;
         font-size: 12px;
         width: auto;
+        border-radius: 16px;
     }
 
     /* Main Area adjustments */
