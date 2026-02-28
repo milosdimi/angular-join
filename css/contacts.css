@@ -410,6 +410,23 @@ form {
     display: none;
 }
 
+/* --- RESPONSIVE CONTACTS (Desktop Intermediate 1000px - 1200px) --- */
+@media (max-width: 1200px) {
+    .contact-list-container {
+        width: 320px; 
+    }
+
+    .contact-detail-view {
+        padding: 30px;
+    }
+
+    .contact-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+
 /* --- RESPONSIVE CONTACTS (Mobile < 1000px) --- */
 @media (max-width: 1000px) {
     .contacts-container {
