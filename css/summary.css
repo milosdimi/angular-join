@@ -412,6 +412,33 @@
     100% { opacity: 0; transform: translateY(-100%); visibility: hidden; }
 }
 
+/* --- RESPONSIVE (Laptop / Small Desktop 1000px - 1400px) --- */
+@media (max-width: 1400px) {
+    .dashboard-header h1 {
+        font-size: 48px; 
+    }
+
+    .greeting-name {
+        font-size: 48px; 
+    }
+
+    .greeting-text {
+        font-size: 36px;
+    }
+
+    .card-number {
+        font-size: 48px;
+    }
+
+    .metric-card {
+        padding: 10px; 
+    }
+
+    .dashboard-content {
+        gap: 30px; 
+    }
+}
+
 /* --- RESPONSIVE DESIGN (Mobile < 1000px) --- */
 @media (max-width: 1000px) {
     .wrapper {

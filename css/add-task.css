@@ -345,6 +345,17 @@ textarea {
     }
 }
 
+/* --- RESPONSIVE (Laptop 1000px - 1400px) --- */
+@media (max-width: 1400px) {
+    .form-layout {
+        gap: 20px; 
+    }
+
+    .content {
+        padding: 30px; 
+    }
+}
+
 /* --- RESPONSIVE --- */
 @media (max-width: 1000px) {
     .form-layout {
