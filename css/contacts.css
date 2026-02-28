@@ -148,7 +148,7 @@
 
 .contact-detail-name {
     font-size: 47px;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .contact-detail-actions {
@@ -427,9 +427,10 @@ form {
     }
 
     .contact-avatar-large {
-        width: 90px;
-        height: 90px;
-        font-size: 32px;
+        width: 80px;
+        height: 80px;
+        font-size: 30px;
+        
     }
     .btn-add-contact {
         position: fixed;
@@ -445,6 +446,7 @@ form {
         align-items: center;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
         z-index: 90;
+        gap: 0; 
     }
 
     .btn-add-contact img {
@@ -495,10 +497,11 @@ form {
 
     .contact-detail-name {
         font-size: 40px;
+        font-weight: bold;
     }
 
     .contact-detail-header {
-        gap: 30px;
+        gap: 20px;
     }
 
 
@@ -530,7 +533,10 @@ form {
         cursor: pointer;
         z-index: 90;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+        gap: 0;
     }
+
+
 
     .mobile-menu-options {
         position: fixed;
