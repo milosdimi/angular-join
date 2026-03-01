@@ -69,10 +69,14 @@ function generateTaskHTML(task) {
     let subtasksProgress = getSubtasksProgress(task);
     let prioIcon = `assets/img/${task.prio}_icon.png`;
     let contactsHTML = generateContactsHTML(task.assignedContacts);
+    let moveMenuHTML = generateMoveMenuHTML(task);
 
     return `
     <div draggable="true" ondragstart="startDragging(${task.id})" class="task-card" onclick="openTaskDetails(${task.id})">
-        <div class="task-category" style="background-color: ${categoryColor}">${task.category}</div>
+        <div class="task-card-header">
+            <div class="task-category" style="background-color: ${categoryColor}">${task.category}</div>
+            ${moveMenuHTML}
+        </div>
         <div class="task-title">${task.title}</div>
         <div class="task-description">${task.description}</div>
         ${subtasksProgress}
@@ -86,6 +90,53 @@ function generateTaskHTML(task) {
         </div>
     </div>
     `;
+}
+
+function generateMoveMenuHTML(task) {
+    const statuses = [
+        { id: 'todo', label: 'To Do' },
+        { id: 'inprogress', label: 'In Progress' },
+        { id: 'awaitingfeedback', label: 'Awaiting Feedback' },
+        { id: 'done', label: 'Done' }
+    ];
+
+    
+    let optionsHTML = statuses
+        .filter(status => status.id !== task.status)
+        .map(status => `
+            <div class="move-menu-item" onclick="moveToFromMenu(event, ${task.id}, '${status.id}')">
+                ${status.label}
+            </div>
+        `).join('');
+
+    
+    return `
+        <div class="move-menu-wrapper">
+            <svg class="move-menu-btn" onclick="toggleMoveMenu(event, ${task.id})" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 8C13.1 8 14 7.1 14 6C14 4.9 13.1 4 12 4C10.9 4 10 4.9 10 6C10 7.1 10.9 8 12 8ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10ZM12 16C10.9 16 10 16.9 10 18C10 19.1 10.9 20 12 20C13.1 20 14 19.1 14 18C14 16.9 13.1 16 12 16Z" fill="#2A3647"/>
+            </svg>
+            <div id="move-menu-${task.id}" class="move-menu-dropdown d-none">
+                ${optionsHTML}
+            </div>
+        </div>
+    `;
+}
+
+function toggleMoveMenu(event, taskId) {
+    event.stopPropagation(); 
+    let menu = document.getElementById(`move-menu-${taskId}`);
+    
+    
+    document.querySelectorAll('.move-menu-dropdown').forEach(el => {
+        if(el.id !== `move-menu-${taskId}`) el.classList.add('d-none');
+    });
+
+    menu.classList.toggle('d-none');
+}
+
+async function moveToFromMenu(event, taskId, newStatus) {
+    event.stopPropagation(); 
+    await moveToStatus(taskId, newStatus); 
 }
 
 function getCategoryColor(category) {
@@ -256,6 +307,15 @@ function generateSubtaskListDetailHTML(task) {
     return html;
 }
 
+
+window.addEventListener('click', function(e) {
+    document.querySelectorAll('.move-menu-dropdown').forEach(menu => {
+        if (!menu.classList.contains('d-none')) {
+            menu.classList.add('d-none');
+        }
+    });
+});
+
 async function moveToStatus(taskId, newStatus) {
     const taskIndex = tasks.findIndex(t => t.id === taskId);
     if (taskIndex !== -1) {
@@ -324,7 +384,7 @@ function openAddTaskModal(status = 'todo') {
     setMinDate(); 
     
     overlay.classList.remove('d-none');
-    document.body.classList.add('no-scroll'); // Scroll sperren
+    document.body.classList.add('no-scroll'); 
 }
 
 async function toggleSubtask(taskId, subtaskIndex) {
@@ -348,7 +408,7 @@ function closeAddTaskModal() {
         overlay.classList.add('d-none');
         modal.classList.remove('slide-out');
         modal.innerHTML = '';
-        document.body.classList.remove('no-scroll'); // Scroll freigeben
+        document.body.classList.remove('no-scroll'); 
     }, 300);
 }
 

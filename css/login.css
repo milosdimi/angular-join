@@ -160,7 +160,7 @@
 /* --- FOOTER --- */
 .login-footer {
     position: absolute;
-    bottom: 40px;
+    bottom: 24px;
     display: flex;
     gap: 20px;
 }

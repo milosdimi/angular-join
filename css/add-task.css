@@ -124,6 +124,11 @@ textarea {
     border-color: #7AE229;
 }
 
+
+.prio-btn.active img {
+    filter: brightness(0) invert(1);
+}
+
 /* --- SUBTASKS --- */
 .subtask-input-wrapper {
     position: relative;
@@ -382,7 +387,7 @@ textarea {
         margin-bottom: 12px; 
         background-color: transparent;
         box-shadow: none;
-        padding: 0;
+        padding-bottom: 64px; 
     }
 
     .form-actions {
@@ -400,9 +405,9 @@ textarea {
 
     .required-info {
         display: block; 
-        margin-bottom: 0;
+        margin-bottom: 15px; 
         font-size: 14px;
-        text-align: left;
+        text-align: center; 
         width: 100%;
     }
 
