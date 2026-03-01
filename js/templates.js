@@ -304,6 +304,98 @@ function getSubtasksProgress(task) {
     </div>
     `;
 }
+
+/**
+ * Generates HTML for a contact letter section header.
+ * @param {string} letter - The letter.
+ * @returns {string} HTML string.
+ */
+function generateContactLetterHTML(letter) {
+    return /*html*/`
+        <div class="contact-letter">${letter}</div>
+        <div class="contact-separator"></div>
+    `;
+}
+
+/**
+ * Generates HTML for a contact item in the list.
+ * @param {object} contact - The contact object.
+ * @param {number} index - The index of the contact.
+ * @returns {string} HTML string.
+ */
+function generateContactItemHTML(contact, index) {
+    return /*html*/`
+        <div class="contact-item" onclick="showContactDetails(${index})">
+            <div class="contact-avatar" style="background-color: ${contact.color};">${getInitials(contact.name)}</div>
+            <div class="contact-info">
+                <span class="contact-name">${contact.name}</span>
+                <a href="mailto:${contact.email}" class="contact-email">${contact.email}</a>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Generates HTML for the contact detail view.
+ * @param {object} contact - The contact object.
+ * @param {number} index - The index of the contact.
+ * @returns {string} HTML string.
+ */
+function generateContactDetailHTML(contact, index) {
+    return /*html*/`
+        <img src="assets/img/arrow_left_icon.png" class="mobile-back-arrow" onclick="closeMobileDetails()">
+
+        <div class="contact-detail-header">
+            <div class="contact-avatar-large" style="background-color: ${contact.color};">${getInitials(contact.name)}</div>
+            <div class="contact-detail-name-box">
+                <span class="contact-detail-name">${contact.name}</span>
+                <div class="contact-detail-actions">
+                    <div class="action-btn" onclick="openEditContact(${index})"><img src="assets/img/edit_icon.svg" alt=""> Edit</div>
+                    <div class="action-btn" onclick="deleteContact(${index})"><img src="assets/img/delete_icon.svg" alt=""> Delete</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-info-headline">Contact Information</div>
+        
+        <div class="contact-info-box">
+            <span class="info-label">Email</span>
+            <a href="mailto:${contact.email}" class="info-value-email">${contact.email}</a>
+            
+            <span class="info-label">Phone</span>
+            <a href="tel:${contact.phone}" class="info-value-phone">${contact.phone}</a>
+        </div>
+
+        <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <img src="assets/img/more_vert_icon.svg" alt="Options">
+        </div>
+
+        <div id="mobileMenuOptions" class="mobile-menu-options">
+            <div class="action-btn" onclick="openEditContact(${index})"><img src="assets/img/edit_icon.svg" alt=""> Edit</div>
+            <div class="action-btn" onclick="deleteContact(${index})"><img src="assets/img/delete_icon.svg" alt=""> Delete</div>
+        </div>
+    `;
+}
+
+/**
+ * Generates HTML for the contact modal action buttons.
+ * @param {string} mode - 'add' or 'edit'.
+ * @param {number} [index] - The index of the contact (only for edit mode).
+ * @returns {string} HTML string.
+ */
+function generateContactModalActionsHTML(mode, index) {
+    if (mode === 'add') {
+        return /*html*/`
+            <button type="button" class="btn-transparent" onclick="closeAddContact()">Cancel <img src="assets/img/cancel_icon.svg" alt=""></button>
+            <button type="submit" id="contactModalSubmitBtn" class="btn-primary btn-create-contact">Create contact <img src="assets/img/check_icon.png" alt=""></button>
+        `;
+    } else {
+        return /*html*/`
+            <button type="button" class="btn-transparent" onclick="deleteContact(${index}); closeAddContact()" style="display:flex; justify-content:center; padding: 16px;">Delete</button>
+            <button type="submit" id="contactModalSubmitBtn" class="btn-primary btn-create-contact">Save <img src="assets/img/check_icon.png" alt=""></button>
+        `;
+    }
+}
 /**
  * Generates HTML for a contact option in the dropdown.
  * @param {object} contact - The contact object.

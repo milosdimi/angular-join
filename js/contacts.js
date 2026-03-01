@@ -2,11 +2,17 @@ let contacts = [];
 const colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'];
 let editingContactIndex = null;
 
+/**
+ * Initializes the contacts page.
+ */
 async function initContacts() {
     await loadContacts();
     renderContactList();
 }
 
+/**
+ * Loads contacts from local storage.
+ */
 async function loadContacts() {
     try {
         contacts = JSON.parse(localStorage.getItem('contacts')) || [];
@@ -15,6 +21,9 @@ async function loadContacts() {
     }
 }
 
+/**
+ * Renders the contact list grouped by first letter.
+ */
 function renderContactList() {
     let list = document.getElementById('contactList');
     list.innerHTML = '';
@@ -29,24 +38,16 @@ function renderContactList() {
 
         if (firstLetter !== currentLetter) {
             currentLetter = firstLetter;
-            list.innerHTML += `
-                <div class="contact-letter">${currentLetter}</div>
-                <div class="contact-separator"></div>
-            `;
+            list.innerHTML += generateContactLetterHTML(currentLetter);
         }
 
-        list.innerHTML += /*html*/`
-            <div class="contact-item" onclick="showContactDetails(${i})">
-                <div class="contact-avatar" style="background-color: ${contact.color};">${getInitials(contact.name)}</div>
-                <div class="contact-info">
-                    <span class="contact-name">${contact.name}</span>
-                    <a href="mailto:${contact.email}" class="contact-email">${contact.email}</a>
-                </div>
-            </div>
-        `;
+        list.innerHTML += generateContactItemHTML(contact, i);
     }
 }
 
+/**
+ * Generates initials from a name.
+ */
 function getInitials(name) {
     let parts = name.split(' ');
     let initials = parts[0].charAt(0);
@@ -56,6 +57,10 @@ function getInitials(name) {
     return initials.toUpperCase();
 }
 
+/**
+ * Displays the details of a selected contact.
+ * @param {number} index - The index of the contact.
+ */
 function showContactDetails(index) {
     const contact = contacts[index];
     const content = document.getElementById('contactDetail');
@@ -65,42 +70,12 @@ function showContactDetails(index) {
         document.querySelector('.contacts-container').classList.add('show-mobile-details');
     }
 
-    content.innerHTML = /*html*/`
-        
-        <img src="assets/img/arrow_left_icon.png" class="mobile-back-arrow" onclick="closeMobileDetails()">
-
-        <div class="contact-detail-header">
-            <div class="contact-avatar-large" style="background-color: ${contact.color};">${getInitials(contact.name)}</div>
-            <div class="contact-detail-name-box">
-                <span class="contact-detail-name">${contact.name}</span>
-                <div class="contact-detail-actions">
-                    <div class="action-btn" onclick="openEditContact(${index})"><img src="assets/img/edit_icon.svg" alt=""> Edit</div>
-                    <div class="action-btn" onclick="deleteContact(${index})"><img src="assets/img/delete_icon.svg" alt=""> Delete</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-info-headline">Contact Information</div>
-        
-        <div class="contact-info-box">
-            <span class="info-label">Email</span>
-            <a href="mailto:${contact.email}" class="info-value-email">${contact.email}</a>
-            
-            <span class="info-label">Phone</span>
-            <a href="tel:${contact.phone}" class="info-value-phone">${contact.phone}</a>
-        </div>
-
-        <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <img src="assets/img/more_vert_icon.svg" alt="Options">
-        </div>
-
-        <div id="mobileMenuOptions" class="mobile-menu-options">
-            <div class="action-btn" onclick="openEditContact(${index})"><img src="assets/img/edit_icon.svg" alt=""> Edit</div>
-            <div class="action-btn" onclick="deleteContact(${index})"><img src="assets/img/delete_icon.svg" alt=""> Delete</div>
-        </div>
-    `;
+    content.innerHTML = generateContactDetailHTML(contact, index);
 }
 
+/**
+ * Closes the mobile detail view.
+ */
 function closeMobileDetails() {
     document.querySelector('.contacts-container').classList.remove('show-mobile-details');
 
@@ -108,20 +83,23 @@ function closeMobileDetails() {
     if (menu) menu.classList.remove('show');
 }
 
+/**
+ * Toggles the mobile options menu.
+ */
 function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenuOptions');
     if (menu) menu.classList.toggle('show');
 }
 
+/**
+ * Opens the modal to add a new contact.
+ */
 function openAddContact() {
     editingContactIndex = null;
     document.getElementById('contactModalTitle').innerText = 'Add contact';
     
     const actionsDiv = document.querySelector('.add-contact-actions');
-    actionsDiv.innerHTML = `
-        <button type="button" class="btn-transparent" onclick="closeAddContact()">Cancel <img src="assets/img/cancel_icon.svg" alt=""></button>
-        <button type="submit" id="contactModalSubmitBtn" class="btn-primary btn-create-contact">Create contact <img src="assets/img/check_icon.png" alt=""></button>
-    `;
+    actionsDiv.innerHTML = generateContactModalActionsHTML('add');
 
     document.getElementById('contactForm').reset();
     const avatar = document.getElementById('contactModalAvatar');
@@ -132,6 +110,10 @@ function openAddContact() {
     document.body.classList.add('no-scroll'); 
 }
 
+/**
+ * Opens the modal to edit an existing contact.
+ * @param {number} index - The index of the contact.
+ */
 function openEditContact(index) {
     editingContactIndex = index;
     const contact = contacts[index];
@@ -139,10 +121,7 @@ function openEditContact(index) {
     document.getElementById('contactModalTitle').innerText = 'Edit contact';
     
     const actionsDiv = document.querySelector('.add-contact-actions');
-    actionsDiv.innerHTML = `
-        <button type="button" class="btn-transparent" onclick="deleteContact(${index}); closeAddContact()" style="display:flex; justify-content:center; padding: 16px;">Delete</button>
-        <button type="submit" id="contactModalSubmitBtn" class="btn-primary btn-create-contact">Save <img src="assets/img/check_icon.png" alt=""></button>
-    `;
+    actionsDiv.innerHTML = generateContactModalActionsHTML('edit', index);
 
     document.getElementById('contactName').value = contact.name;
     document.getElementById('contactEmail').value = contact.email;
@@ -156,6 +135,9 @@ function openEditContact(index) {
     document.body.classList.add('no-scroll'); 
 }
 
+/**
+ * Closes the add/edit contact modal.
+ */
 function closeAddContact() {
     const overlay = document.getElementById('addContactOverlay');
     const card = overlay.querySelector('.add-contact-card');
@@ -168,6 +150,9 @@ function closeAddContact() {
     }, 300);
 }
 
+/**
+ * Handles the form submission for adding or editing a contact.
+ */
 function handleContactFormSubmit() {
     if (editingContactIndex === null) {
         createContact();
@@ -176,6 +161,9 @@ function handleContactFormSubmit() {
     }
 }
 
+/**
+ * Creates a new contact and saves it.
+ */
 async function createContact() {
     let name = document.getElementById('contactName');
     let email = document.getElementById('contactEmail');
@@ -193,6 +181,10 @@ async function createContact() {
     closeAddContact();
 }
 
+/**
+ * Saves changes to an existing contact.
+ * @param {number} index - The index of the contact.
+ */
 async function saveContact(index) {
     let name = document.getElementById('contactName').value;
     let email = document.getElementById('contactEmail').value;
@@ -208,6 +200,10 @@ async function saveContact(index) {
     closeAddContact();
 }
 
+/**
+ * Deletes a contact.
+ * @param {number} index - The index of the contact.
+ */
 async function deleteContact(index) {
     contacts.splice(index, 1);
     await localStorage.setItem('contacts', JSON.stringify(contacts));
