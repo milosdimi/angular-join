@@ -62,7 +62,7 @@ function updatePasswordIcon(inputId) {
         icon.src = 'assets/img/lock_icon.png';
         input.type = 'password';
     } else {
-        // Wenn wir anfangen zu tippen und das Schloss noch da ist -> Invisible Icon
+        
         if (icon.src.includes('lock_icon.png')) {
             icon.src = 'assets/img/invisible.png';
         }
@@ -71,7 +71,7 @@ function updatePasswordIcon(inputId) {
 
 function togglePasswordVisibility(inputId, icon) {
     const input = document.getElementById(inputId);
-    if (input.value.length === 0) return; // Nichts tun, wenn leer (Schloss bleibt)
+    if (input.value.length === 0) return; 
 
     const type = input.type === 'password' ? 'text' : 'password';
     input.type = type;
@@ -85,7 +85,7 @@ async function register() {
     
     await loadUsers();
     
-    // Einfache Prüfung, ob User schon existiert (optional)
+    
     const userExists = users.find(u => u.email === email);
     if (userExists) {
         alert('User already exists!');
@@ -95,7 +95,7 @@ async function register() {
     users.push({ name: name, email: email, password: password });
     await localStorage.setItem('users', JSON.stringify(users));
     
-    // Direkt einloggen
+
     localStorage.setItem('currentUser', name);
     window.location.href = 'summary.html';
 }

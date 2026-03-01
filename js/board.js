@@ -345,7 +345,7 @@ function editTask(taskId) {
             <h1>Edit Task</h1>
             <img src="assets/img/cancel_icon.svg" alt="Close" class="close-icon" onclick="closeTaskDetails()">
         </div>
-        <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;">
+        <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;" novalidate>
             ${taskFormTemplate}
         </form>
     `;
@@ -354,6 +354,7 @@ function editTask(taskId) {
     editingTaskId = taskId;
     newTaskStatus = task.status;
     populateForm(task);
+    setupSubtaskInput(); 
 
     
     const createBtn = modal.querySelector('.btn-create');
@@ -373,7 +374,7 @@ function openAddTaskModal(status = 'todo') {
             <h1>Add Task</h1>
             <img src="assets/img/cancel_icon.svg" alt="Close" class="close-icon" onclick="closeAddTaskModal()">
         </div>
-        <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;">
+        <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;" novalidate>
             ${taskFormTemplate}
         </form>
     `;
@@ -382,6 +383,7 @@ function openAddTaskModal(status = 'todo') {
     editingTaskId = null;
     clearTask(); 
     setMinDate(); 
+    setupSubtaskInput(); 
     
     overlay.classList.remove('d-none');
     document.body.classList.add('no-scroll'); 

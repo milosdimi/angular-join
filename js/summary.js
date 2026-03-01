@@ -48,7 +48,7 @@ function getTimeGreeting() {
  */
 async function updateSummaryMetrics() {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const animationDuration = 1000; // 1 second for animation
+    const animationDuration = 1000; 
 
     // Update counts with animation
     animateNumber(document.getElementById('summaryTodo'), tasks.filter(t => t.status === 'todo').length, animationDuration);
@@ -61,10 +61,10 @@ async function updateSummaryMetrics() {
     const urgentTasks = tasks.filter(t => t.prio === 'urgent');
     animateNumber(document.getElementById('summaryUrgent'), urgentTasks.length, animationDuration);
 
-    // Find and display the next upcoming deadline for urgent tasks
+    
     const upcomingUrgentTask = urgentTasks
-        .filter(t => new Date(t.dueDate) >= new Date()) // Filter for future or today's dates
-        .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0]; // Sort by date and get the first one
+        .filter(t => new Date(t.dueDate) >= new Date()) 
+        .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0]; 
 
     const urgentDateElement = document.getElementById('summaryUrgentDate');
     if (upcomingUrgentTask) {
@@ -97,7 +97,7 @@ function animateNumber(element, endValue, duration) {
         if (progress < 1) {
             requestAnimationFrame(animation);
         } else {
-            element.innerText = endValue; // Ensure it ends on the exact value
+            element.innerText = endValue; 
         }
     }
 
@@ -108,8 +108,7 @@ function animateNumber(element, endValue, duration) {
  * Handles the mobile greeting animation.
  */
 function checkMobileGreeting() {
-    // Check if screen width is mobile (< 1000px)
-    // AND check if we haven't shown the greeting in this session yet
+
     if (window.innerWidth < 1000 && !sessionStorage.getItem('mobileGreetingShown')) {
         const overlay = document.getElementById('mobileGreeting');
         if (!overlay) return;
@@ -122,12 +121,12 @@ function checkMobileGreeting() {
         
         overlay.classList.remove('d-none');
         
-        // Mark as shown in session storage
+        
         sessionStorage.setItem('mobileGreetingShown', 'true');
 
-        // Remove from DOM after animation to enable clicking
+        
         setTimeout(() => {
             overlay.classList.add('d-none');
-        }, 3000); // 2s wait + 1s animation
+        }, 3000); 
     }
 }

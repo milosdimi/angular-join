@@ -13,6 +13,7 @@ async function initAddTask() {
     const id = urlParams.get('id');
     await loadContacts();
     setMinDate();
+    setupSubtaskInput(); 
 
     if (id) {
         editingTaskId = parseInt(id);
@@ -49,7 +50,7 @@ async function prepareEditMode() {
     document.querySelector('h1').innerText = 'Edit Task';
     const createBtn = document.querySelector('.btn-create');
     createBtn.innerHTML = 'Save <img src="assets/img/check_icon.png" alt="">';
-    document.querySelector('.btn-clear').classList.add('d-none'); // Hide clear button in edit mode
+    document.querySelector('.btn-clear').classList.add('d-none'); 
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const taskToEdit = tasks.find(t => t.id === editingTaskId);
@@ -64,17 +65,15 @@ async function prepareEditMode() {
  * @param {string} prio - The selected priority ('urgent', 'medium', 'low').
  */
 function setPrio(prio) {    
-    // Reset all buttons to their default state
+    
     const buttons = document.querySelectorAll('.prio-btn');
     buttons.forEach(button => {
         button.classList.remove('active');
     });
 
-    // Activate the selected button
     const selectedButton = document.getElementById(`prio${prio.charAt(0).toUpperCase() + prio.slice(1)}`);
     selectedButton.classList.add('active');
 
-    // Store the selected priority
     currentPrio = prio;
 }
 
@@ -104,9 +103,39 @@ function populateForm(task) {
     renderSubtasks();
 }
 
+function validateTaskForm() {
+    let isValid = true;
+    const title = document.getElementById('title');
+    const date = document.getElementById('dueDate');
+    const category = document.getElementById('category');
+
+    if (!title.value.trim()) {
+        title.classList.add('error-border');
+        isValid = false;
+    } else {
+        title.classList.remove('error-border');
+    }
+
+    if (!date.value) {
+        date.classList.add('error-border');
+        isValid = false;
+    } else {
+        date.classList.remove('error-border');
+    }
+
+    if (!category.value) {
+        category.classList.add('error-border');
+        isValid = false;
+    } else {
+        category.classList.remove('error-border');
+    }
+    
+    return isValid;
+}
+
 function handleTaskFormSubmit() {
-    // This function is called by the form's onsubmit event.
-    // It prevents the default form submission and calls the appropriate function.
+    if (!validateTaskForm()) return false; 
+
     if (editingTaskId !== null) {
         saveEditedTask();
     } else {
@@ -121,11 +150,11 @@ async function createTask() {
     let dueDate = document.getElementById('dueDate').value;
     let category = document.getElementById('category').value;
     
-    // Load existing tasks from localStorage
+
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
     let newTask = {
-        id: new Date().getTime(), // Unique ID for the task
+        id: new Date().getTime(), 
         title: title,
         description: description,
         dueDate: dueDate,
@@ -136,17 +165,17 @@ async function createTask() {
         assignedContacts: assignedContacts
     };
     
-    // Add the new task and save the updated list
+
     tasks.push(newTask);
     localStorage.setItem('tasks', JSON.stringify(tasks));
     
-    // Show confirmation and redirect
+
     showTaskAddedMessage();
     
     if (window.location.pathname.includes('board.html')) {
         setTimeout(async () => {
             closeAddTaskModal();
-            await loadTasks(); // WICHTIG: Tasks neu laden!
+            await loadTasks(); 
             renderBoard();
         }, 1000);
     } else {
@@ -174,11 +203,23 @@ async function saveEditedTask() {
     
     // Redirect back to board
     if (window.location.pathname.includes('board.html')) {
-        closeTaskDetails(); // Schließt das Edit-Modal
-        await loadTasks(); // WICHTIG: Tasks neu laden!
+        closeTaskDetails(); 
+        await loadTasks(); 
         renderBoard();
     } else {
         window.location.href = 'board.html';
+    }
+}
+
+function setupSubtaskInput() {
+    const input = document.getElementById('subtask');
+    if (input) {
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); 
+                addSubtask();
+            }
+        });
     }
 }
 
@@ -236,7 +277,7 @@ function saveSubtask(index) {
     if (input.value.length > 0) {
         subtasks[index].title = input.value;
     } else {
-        // If the input is empty, delete the subtask
+        
         subtasks.splice(index, 1);
     }
     renderSubtasks();
@@ -267,7 +308,7 @@ function toggleContactsDropdown(event) {
     
     if (!options.classList.contains('d-none')) {
         renderContactsDropdown();
-        // Close dropdown when clicking outside
+        
         document.addEventListener('click', closeDropdownOnClickOutside, true);
     } else {
         document.removeEventListener('click', closeDropdownOnClickOutside, true);

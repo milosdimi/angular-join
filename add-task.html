@@ -21,7 +21,7 @@
             <main class="content">
                 <h1>Add Task</h1>
                 
-                <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;">
+                <form id="addTaskForm" onsubmit="handleTaskFormSubmit(); return false;" novalidate>
                     <div class="form-layout">
                         <!-- Left Column -->
                         <div class="form-column">
@@ -81,7 +81,7 @@
                             <div class="input-group">
                                 <label for="subtask">Subtasks</label>
                                 <div class="subtask-input-wrapper">
-                                    <input type="text" id="subtask" placeholder="Add new subtask" onkeydown="if(event.key === 'Enter'){addSubtask(); return false;}">
+                                    <input type="text" id="subtask" placeholder="Add new subtask">
                                     <div class="subtask-icons" onmousedown="event.preventDefault()">
                                         <img src="assets/img/cancel_icon.svg" alt="Clear" class="subtask-icon-cancel" onclick="clearSubtaskInput()">
                                         <div class="subtask-separator"></div>

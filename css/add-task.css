@@ -47,6 +47,10 @@ select,
     font-family: 'Inter', sans-serif;
 }
 
+.error-border {
+    border-color: #FF8190 !important;
+}
+
 /* --- CUSTOM SELECT ARROW --- */
 select {
     appearance: none;

@@ -8,7 +8,7 @@ async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
     for (let i = 0; i < includeElements.length; i++) {
         const element = includeElements[i];
-        let file = element.getAttribute("w3-include-html"); // 'let' hinzugefügt
+        let file = element.getAttribute("w3-include-html"); 
         let resp = await fetch(file);
         if (resp.ok) {
             element.innerHTML = await resp.text();
@@ -32,28 +32,28 @@ function checkAuth() {
     let user = localStorage.getItem('currentUser');
     let path = window.location.pathname;
 
-    // Definition der Seiten
+    
     let loginPages = ['index.html', 'signup.html', '/'];
-    // Seiten, die jeder sehen darf (auch ohne Login)
+    
     let publicPages = ['privacy-policy.html', 'legal-notice.html', 'help.html'];
     
     // Checks
     let isLoginPage = loginPages.some(page => path.endsWith(page));
     let isPublicPage = publicPages.some(page => path.includes(page));
 
-    // 1. User ist eingeloggt und auf Login-Seite -> Redirect zu Summary
+    
     if (user && isLoginPage) {
         window.location.href = 'summary.html';
         return;
     }
     
-    // 2. User ist NICHT eingeloggt
+    
     if (!user) {
-        // Auf geschützter Seite (weder Login noch Public) -> Redirect zu Login
+        
         if (!isLoginPage && !isPublicPage) {
             window.location.href = 'index.html';
         } 
-        // Auf Public Page (Privacy etc.) -> Sidebar anpassen (Login-Button zeigen)
+        
         else if (isPublicPage) {
             hideSidebarMenu();
         }
@@ -78,7 +78,7 @@ function toggleDropdown() {
     dropdown.classList.toggle('d-none');
 }
 
-// Schließt das Dropdown, wenn man daneben klickt
+
 window.onclick = function(event) {
     if (!event.target.matches('.profile-icon') && !event.target.closest('.profile-dropdown')) {
         let dropdown = document.getElementById('profileDropdown');
