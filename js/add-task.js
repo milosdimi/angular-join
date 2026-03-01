@@ -6,7 +6,7 @@ let contacts = [];
 let assignedContacts = [];
 
 /**
- * Initializes the add task page
+ * Initializes the add task page.
  */
 async function initAddTask() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -38,6 +38,9 @@ function setMinDate() {
     });
 }
 
+/**
+ * Loads contacts from local storage.
+ */
 async function loadContacts() {
     try {
         contacts = JSON.parse(localStorage.getItem('contacts')) || [];
@@ -46,6 +49,9 @@ async function loadContacts() {
     }
 }
 
+/**
+ * Prepares the form for editing an existing task.
+ */
 async function prepareEditMode() {
     document.querySelector('h1').innerText = 'Edit Task';
     const createBtn = document.querySelector('.btn-create');
@@ -77,6 +83,9 @@ function setPrio(prio) {
     currentPrio = prio;
 }
 
+/**
+ * Clears all inputs in the task form.
+ */
 function clearTask() {
     document.getElementById('title').value = '';
     document.getElementById('description').value = '';
@@ -91,6 +100,10 @@ function clearTask() {
     renderSelectedContactsBadges();
 }
 
+/**
+ * Populates the form with data from an existing task.
+ * @param {object} task - The task object to load.
+ */
 function populateForm(task) {
     document.getElementById('title').value = task.title;
     document.getElementById('description').value = task.description;
@@ -103,6 +116,10 @@ function populateForm(task) {
     renderSubtasks();
 }
 
+/**
+ * Validates the required fields in the task form.
+ * @returns {boolean} True if valid, false otherwise.
+ */
 function validateTaskForm() {
     let isValid = true;
     const title = document.getElementById('title');
@@ -133,6 +150,10 @@ function validateTaskForm() {
     return isValid;
 }
 
+/**
+ * Handles the form submission event.
+ * @returns {boolean} Always false to prevent default submission.
+ */
 function handleTaskFormSubmit() {
     if (!validateTaskForm()) return false; 
 
@@ -144,34 +165,42 @@ function handleTaskFormSubmit() {
     return false; 
 }
 
+/**
+ * Creates a new task and saves it to storage.
+ */
 async function createTask() {
-    let title = document.getElementById('title').value;
-    let description = document.getElementById('description').value;
-    let dueDate = document.getElementById('dueDate').value;
-    let category = document.getElementById('category').value;
-    
-
+    let newTask = getTaskData();
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    
+    tasks.push(newTask);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    
+    showTaskAddedMessage();
+    redirectToBoard();
+}
 
-    let newTask = {
-        id: new Date().getTime(), 
-        title: title,
-        description: description,
-        dueDate: dueDate,
-        category: category,
+/**
+ * Collects task data from the form inputs.
+ * @returns {object} The task object.
+ */
+function getTaskData() {
+    return {
+        id: new Date().getTime(),
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        dueDate: document.getElementById('dueDate').value,
+        category: document.getElementById('category').value,
         prio: currentPrio,
         subtasks: subtasks,
         status: newTaskStatus,
         assignedContacts: assignedContacts
     };
-    
+}
 
-    tasks.push(newTask);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    
-
-    showTaskAddedMessage();
-    
+/**
+ * Redirects the user to the board page after a short delay.
+ */
+function redirectToBoard() {
     if (window.location.pathname.includes('board.html')) {
         setTimeout(async () => {
             closeAddTaskModal();
@@ -185,32 +214,37 @@ async function createTask() {
     }
 }
 
+/**
+ * Saves changes to an existing task.
+ */
 async function saveEditedTask() {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const taskIndex = tasks.findIndex(t => t.id === editingTaskId);
 
     if (taskIndex !== -1) {
-        tasks[taskIndex].title = document.getElementById('title').value;
-        tasks[taskIndex].description = document.getElementById('description').value;
-        tasks[taskIndex].dueDate = document.getElementById('dueDate').value;
-        tasks[taskIndex].category = document.getElementById('category').value;
-        tasks[taskIndex].prio = currentPrio;
-        tasks[taskIndex].subtasks = subtasks;
-        tasks[taskIndex].assignedContacts = assignedContacts;
-    }
-
-    await localStorage.setItem('tasks', JSON.stringify(tasks));
-    
-    // Redirect back to board
-    if (window.location.pathname.includes('board.html')) {
-        closeTaskDetails(); 
-        await loadTasks(); 
-        renderBoard();
-    } else {
-        window.location.href = 'board.html';
+        updateTaskObject(tasks[taskIndex]);
+        await localStorage.setItem('tasks', JSON.stringify(tasks));
+        redirectToBoard();
     }
 }
 
+/**
+ * Updates a task object with current form values.
+ * @param {object} task - The task object to update.
+ */
+function updateTaskObject(task) {
+    task.title = document.getElementById('title').value;
+    task.description = document.getElementById('description').value;
+    task.dueDate = document.getElementById('dueDate').value;
+    task.category = document.getElementById('category').value;
+    task.prio = currentPrio;
+    task.subtasks = subtasks;
+    task.assignedContacts = assignedContacts;
+}
+
+/**
+ * Sets up the event listener for the subtask input field (Enter key).
+ */
 function setupSubtaskInput() {
     const input = document.getElementById('subtask');
     if (input) {
@@ -223,6 +257,9 @@ function setupSubtaskInput() {
     }
 }
 
+/**
+ * Adds a new subtask to the list.
+ */
 function addSubtask() {
     let input = document.getElementById('subtask');
     if (input.value.length > 0) {
@@ -235,43 +272,35 @@ function addSubtask() {
     }
 }
 
+/**
+ * Renders the list of subtasks.
+ */
 function renderSubtasks() {
     let list = document.getElementById('subtaskList');
     list.innerHTML = '';
     
     for (let i = 0; i < subtasks.length; i++) {
-        const subtask = subtasks[i];
-        list.innerHTML += /*html*/`
-            <li class="subtask-item" id="subtask-${i}">
-                <span>• ${subtask.title}</span>
-                <div class="subtask-actions">
-                    <img src="assets/img/edit_icon.svg" onclick="editSubtask(${i})" class="subtask-action-icon">
-                    <div class="subtask-separator-list"></div>
-                    <img src="assets/img/delete_icon.svg" onclick="deleteSubtask(${i})" class="subtask-action-icon">
-                </div>
-            </li>
-        `;
+        list.innerHTML += generateSubtaskHTML(subtasks[i], i);
     }
 }
 
+/**
+ * Enables edit mode for a specific subtask.
+ * @param {number} index - The index of the subtask.
+ */
 function editSubtask(index) {
     let subtaskItem = document.getElementById(`subtask-${index}`);
     let currentTitle = subtasks[index].title;
     
     subtaskItem.classList.add('editing');
-    subtaskItem.innerHTML = /*html*/`
-        <div class="subtask-edit-input-wrapper">
-            <input type="text" id="edit-subtask-${index}" value="${currentTitle}" onkeydown="if(event.key === 'Enter'){saveSubtask(${index}); return false;}">
-            <div class="subtask-edit-actions">
-                <img src="assets/img/delete_icon.svg" onclick="deleteSubtask(${index})" class="subtask-action-icon">
-                <div class="subtask-separator-list"></div>
-                <img src="assets/img/check_icon.png" onclick="saveSubtask(${index})" class="subtask-action-icon">
-            </div>
-        </div>
-    `;
+    subtaskItem.innerHTML = generateEditSubtaskHTML(currentTitle, index);
     document.getElementById(`edit-subtask-${index}`).focus();
 }
 
+/**
+ * Saves the edited subtask title.
+ * @param {number} index - The index of the subtask.
+ */
 function saveSubtask(index) {
     let input = document.getElementById(`edit-subtask-${index}`);
     if (input.value.length > 0) {
@@ -283,15 +312,25 @@ function saveSubtask(index) {
     renderSubtasks();
 }
 
+/**
+ * Deletes a subtask from the list.
+ * @param {number} index - The index of the subtask.
+ */
 function deleteSubtask(index) {
     subtasks.splice(index, 1);
     renderSubtasks();
 }
 
+/**
+ * Clears the subtask input field.
+ */
 function clearSubtaskInput() {
     document.getElementById('subtask').value = '';
 }
 
+/**
+ * Shows a confirmation message when a task is added.
+ */
 function showTaskAddedMessage() {
     const msgElement = document.getElementById('taskAddedMsg');
     if (msgElement) {
@@ -301,6 +340,10 @@ function showTaskAddedMessage() {
 
 // --- CONTACTS DROPDOWN LOGIC ---
 
+/**
+ * Toggles the visibility of the contacts dropdown.
+ * @param {Event} event - The click event.
+ */
 function toggleContactsDropdown(event) {
     if(event) event.stopPropagation();
     const options = document.getElementById('dropdownOptions');
@@ -315,6 +358,10 @@ function toggleContactsDropdown(event) {
     }
 }
 
+/**
+ * Closes the dropdown when clicking outside of it.
+ * @param {Event} event - The click event.
+ */
 function closeDropdownOnClickOutside(event) {
     const dropdown = document.getElementById('dropdownAssigned');
     if (dropdown && !dropdown.contains(event.target)) {
@@ -323,22 +370,23 @@ function closeDropdownOnClickOutside(event) {
     }
 }
 
+/**
+ * Renders the list of contacts in the dropdown.
+ */
 function renderContactsDropdown() {
     const container = document.getElementById('dropdownOptions');
     container.innerHTML = '';
     
     contacts.forEach((contact, index) => {
         const isSelected = assignedContacts.includes(contact.email);
-        container.innerHTML += /*html*/`
-            <div class="dropdown-option ${isSelected ? 'selected' : ''}" onclick="toggleContactSelection(${index})">
-                <div class="contact-badge" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>
-                <span>${contact.name}</span>
-                <input type="checkbox" ${isSelected ? 'checked' : ''}>
-            </div>
-        `;
+        container.innerHTML += generateContactOptionHTML(contact, index, isSelected);
     });
 }
 
+/**
+ * Toggles the selection status of a contact.
+ * @param {number} index - The index of the contact.
+ */
 function toggleContactSelection(index) {
     const contact = contacts[index];
     const contactIndex = assignedContacts.indexOf(contact.email);
@@ -352,6 +400,9 @@ function toggleContactSelection(index) {
     renderSelectedContactsBadges();
 }
 
+/**
+ * Renders badges for selected contacts below the dropdown.
+ */
 function renderSelectedContactsBadges() {
     const container = document.getElementById('selectedContactsContainer');
     container.innerHTML = '';
@@ -364,6 +415,11 @@ function renderSelectedContactsBadges() {
     });
 }
 
+/**
+ * Generates initials from a name.
+ * @param {string} name - The full name.
+ * @returns {string} The initials (uppercase).
+ */
 function getInitials(name) {
     let parts = name.split(' ');
     let initials = parts[0].charAt(0);
