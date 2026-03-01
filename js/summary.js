@@ -1,12 +1,11 @@
 /**
  * Initializes the summary page.
  */
-async function initSummary() {
+function initSummary() {
     setGreeting();
-    await updateSummaryMetrics();
+    updateSummaryMetrics();
     checkMobileGreeting();
 }
-
 
 /**
  * Sets the greeting text based on time and user status.
@@ -25,7 +24,6 @@ function setGreeting() {
         nameElement.innerHTML = user || 'User';
     }
 }
-
 
 /**
  * Returns the greeting string based on the current hour.
@@ -46,30 +44,58 @@ function getTimeGreeting() {
 /**
  * Loads tasks and updates the metric cards on the summary page.
  */
-async function updateSummaryMetrics() {
-    let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const animationDuration = 1000; 
+function updateSummaryMetrics() {
+    let tasks = loadTasksFromStorage();
+    updateTaskCounts(tasks);
+    updateUrgentMetric(tasks);
+}
 
-    // Update counts with animation
-    animateNumber(document.getElementById('summaryTodo'), tasks.filter(t => t.status === 'todo').length, animationDuration);
-    animateNumber(document.getElementById('summaryDone'), tasks.filter(t => t.status === 'done').length, animationDuration);
-    animateNumber(document.getElementById('summaryTotal'), tasks.length, animationDuration);
-    animateNumber(document.getElementById('summaryInProgress'), tasks.filter(t => t.status === 'inprogress').length, animationDuration);
-    animateNumber(document.getElementById('summaryAwaiting'), tasks.filter(t => t.status === 'awaitingfeedback').length, animationDuration);
+/**
+ * Loads tasks from local storage safely.
+ * @returns {Array} Array of tasks.
+ */
+function loadTasksFromStorage() {
+    try {
+        return JSON.parse(localStorage.getItem('tasks')) || [];
+    } catch (e) {
+        return [];
+    }
+}
 
-    // Handle Urgent Tasks
+/**
+ * Updates the count numbers for each task status.
+ * @param {Array} tasks - The list of tasks.
+ */
+function updateTaskCounts(tasks) {
+    const duration = 1000;
+    animateNumber(document.getElementById('summaryTodo'), getCount(tasks, 'status', 'todo'), duration);
+    animateNumber(document.getElementById('summaryDone'), getCount(tasks, 'status', 'done'), duration);
+    animateNumber(document.getElementById('summaryTotal'), tasks.length, duration);
+    animateNumber(document.getElementById('summaryInProgress'), getCount(tasks, 'status', 'inprogress'), duration);
+    animateNumber(document.getElementById('summaryAwaiting'), getCount(tasks, 'status', 'awaitingfeedback'), duration);
+    animateNumber(document.getElementById('summaryUrgent'), getCount(tasks, 'prio', 'urgent'), duration);
+}
+
+/**
+ * Helper to count tasks by property.
+ */
+function getCount(tasks, key, value) {
+    return tasks.filter(t => t[key] === value).length;
+}
+
+/**
+ * Updates the urgent task date display.
+ * @param {Array} tasks - The list of tasks.
+ */
+function updateUrgentMetric(tasks) {
     const urgentTasks = tasks.filter(t => t.prio === 'urgent');
-    animateNumber(document.getElementById('summaryUrgent'), urgentTasks.length, animationDuration);
-
-    
     const upcomingUrgentTask = urgentTasks
         .filter(t => new Date(t.dueDate) >= new Date()) 
         .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))[0]; 
 
     const urgentDateElement = document.getElementById('summaryUrgentDate');
     if (upcomingUrgentTask) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        urgentDateElement.innerText = new Date(upcomingUrgentTask.dueDate).toLocaleDateString('en-US', options);
+        urgentDateElement.innerText = new Date(upcomingUrgentTask.dueDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     } else {
         urgentDateElement.innerText = 'None upcoming';
     }
@@ -108,25 +134,26 @@ function animateNumber(element, endValue, duration) {
  * Handles the mobile greeting animation.
  */
 function checkMobileGreeting() {
-
     if (window.innerWidth < 1000 && !sessionStorage.getItem('mobileGreetingShown')) {
-        const overlay = document.getElementById('mobileGreeting');
-        if (!overlay) return;
-        
-        const content = overlay.querySelector('.greeting-content');
-        const user = localStorage.getItem('currentUser') || 'Guest';
-        const timeText = getTimeGreeting();
-
-        content.innerHTML = `${timeText},<br><span style="color: var(--secondary-color); font-size: 48px;">${user}</span>`;
-        
-        overlay.classList.remove('d-none');
-        
-        
-        sessionStorage.setItem('mobileGreetingShown', 'true');
-
-        
-        setTimeout(() => {
-            overlay.classList.add('d-none');
-        }, 3000); 
+        showMobileGreetingOverlay();
     }
+}
+
+/**
+ * Displays the mobile greeting overlay and hides it after a delay.
+ */
+function showMobileGreetingOverlay() {
+    const overlay = document.getElementById('mobileGreeting');
+    if (!overlay) return;
+    
+    const user = localStorage.getItem('currentUser') || 'Guest';
+    const greeting = getTimeGreeting();
+
+    overlay.querySelector('.greeting-content').innerHTML = generateMobileGreetingHTML(greeting, user);
+    overlay.classList.remove('d-none');
+    sessionStorage.setItem('mobileGreetingShown', 'true');
+
+    setTimeout(() => {
+        overlay.classList.add('d-none');
+    }, 2500);
 }

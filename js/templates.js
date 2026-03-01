@@ -396,6 +396,16 @@ function generateContactModalActionsHTML(mode, index) {
         `;
     }
 }
+
+/**
+ * Generates HTML for the mobile greeting overlay.
+ * @param {string} greeting - The greeting text (e.g., "Good morning").
+ * @param {string} name - The user's name.
+ * @returns {string} HTML string.
+ */
+function generateMobileGreetingHTML(greeting, name) {
+    return /*html*/`${greeting},<br><span style="color: var(--secondary-color); font-size: 48px;">${name}</span>`;
+}
 /**
  * Generates HTML for a contact option in the dropdown.
  * @param {object} contact - The contact object.
