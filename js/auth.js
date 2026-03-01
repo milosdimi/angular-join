@@ -1,5 +1,8 @@
 let users = [];
 
+/**
+ * Loads users from local storage into the users array.
+ */
 async function loadUsers() {
     try {
         users = JSON.parse(localStorage.getItem('users')) || [];
@@ -8,36 +11,45 @@ async function loadUsers() {
     }
 }
 
+/**
+ * Logs in the user as a guest and redirects to the summary page.
+ */
 function guestLogin() {
     localStorage.setItem('currentUser', 'guest');
     window.location.href = 'summary.html';
 }
 
+/**
+ * Initializes the signup page.
+ */
 function initSignup() {
-    // Dummy User Data
-    document.getElementById('name').value = 'Guest User';
-    document.getElementById('email').value = 'guest@email.com';
-    document.getElementById('password').value = '123456';
-    document.getElementById('confirmPassword').value = '123456';
-    updatePasswordIcon('password');
-    updatePasswordIcon('confirmPassword');
-    
-    toggleSignupBtn();
+    // Clean Code: No dummy data in production
 }
 
+/**
+ * Toggles the signup button state based on form validity.
+ */
 function toggleSignupBtn() {
+    const canSignup = checkSignupValidity();
+    document.getElementById('signupBtn').disabled = !canSignup;
+}
+
+/**
+ * Checks if all signup requirements are met.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+function checkSignupValidity() {
     const privacyCheckbox = document.getElementById('privacyPolicy');
-    const signupBtn = document.getElementById('signupBtn');
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
 
-    if (privacyCheckbox.checked && password.length > 0 && password === confirmPassword) {
-        signupBtn.disabled = false;
-    } else {
-        signupBtn.disabled = true;
-    }
+    return privacyCheckbox.checked && password.length > 0 && password === confirmPassword;
 }
 
+/**
+ * Validates if the password and confirm password fields match.
+ * Updates the UI accordingly.
+ */
 function validatePassword() {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirmPassword').value;
@@ -45,15 +57,37 @@ function validatePassword() {
     const confirmInput = document.getElementById('confirmPassword');
 
     if (password !== confirmPassword && confirmPassword.length > 0) {
-        msgBox.classList.remove('d-none');
-        confirmInput.style.borderColor = '#FF8190';
+        showPasswordError(msgBox, confirmInput);
     } else {
-        msgBox.classList.add('d-none');
-        confirmInput.style.borderColor = '#D1D1D1';
+        hidePasswordError(msgBox, confirmInput);
     }
     toggleSignupBtn();
 }
 
+/**
+ * Shows the password mismatch error.
+ * @param {HTMLElement} msgBox - The error message element.
+ * @param {HTMLElement} input - The input element to style.
+ */
+function showPasswordError(msgBox, input) {
+    msgBox.classList.remove('d-none');
+    input.style.borderColor = '#FF8190';
+}
+
+/**
+ * Hides the password mismatch error.
+ * @param {HTMLElement} msgBox - The error message element.
+ * @param {HTMLElement} input - The input element to style.
+ */
+function hidePasswordError(msgBox, input) {
+    msgBox.classList.add('d-none');
+    input.style.borderColor = '#D1D1D1';
+}
+
+/**
+ * Updates the password input icon based on input content.
+ * @param {string} inputId - The ID of the input field.
+ */
 function updatePasswordIcon(inputId) {
     const input = document.getElementById(inputId);
     const icon = input.nextElementSibling;
@@ -69,6 +103,11 @@ function updatePasswordIcon(inputId) {
     }
 }
 
+/**
+ * Toggles the visibility of the password input.
+ * @param {string} inputId - The ID of the input field.
+ * @param {HTMLElement} icon - The icon element to update.
+ */
 function togglePasswordVisibility(inputId, icon) {
     const input = document.getElementById(inputId);
     if (input.value.length === 0) return; 
@@ -78,6 +117,9 @@ function togglePasswordVisibility(inputId, icon) {
     icon.src = type === 'password' ? 'assets/img/invisible.png' : 'assets/img/visible.png';
 }
 
+/**
+ * Registers a new user if they don't exist yet.
+ */
 async function register() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
@@ -85,33 +127,65 @@ async function register() {
     
     await loadUsers();
     
-    
-    const userExists = users.find(u => u.email === email);
-    if (userExists) {
+    if (isUserExisting(email)) {
         alert('User already exists!');
         return;
     }
 
-    users.push({ name: name, email: email, password: password });
-    await localStorage.setItem('users', JSON.stringify(users));
-    
-
-    localStorage.setItem('currentUser', name);
-    window.location.href = 'summary.html';
+    await createAndLoginUser(name, email, password);
 }
 
+/**
+ * Checks if a user with the given email already exists.
+ * @param {string} email - The email to check.
+ * @returns {boolean} True if user exists.
+ */
+function isUserExisting(email) {
+    return users.some(u => u.email === email);
+}
+
+/**
+ * Creates a new user, saves to storage, and logs them in.
+ * @param {string} name - User name.
+ * @param {string} email - User email.
+ * @param {string} password - User password.
+ */
+async function createAndLoginUser(name, email, password) {
+    users.push({ name: name, email: email, password: password });
+    await localStorage.setItem('users', JSON.stringify(users));
+    loginSuccess(name);
+}
+
+/**
+ * Handles the login process.
+ */
 async function login() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    const msgBox = document.getElementById('msgBox');
 
     await loadUsers();
     const user = users.find(u => u.email === email && u.password === password);
 
     if (user) {
-        localStorage.setItem('currentUser', user.name);
-        window.location.href = 'summary.html';
+        loginSuccess(user.name);
     } else {
-        if (msgBox) msgBox.classList.remove('d-none');
+        showLoginError();
     }
+}
+
+/**
+ * Sets the current user and redirects to summary.
+ * @param {string} name - The user's name.
+ */
+function loginSuccess(name) {
+    localStorage.setItem('currentUser', name);
+    window.location.href = 'summary.html';
+}
+
+/**
+ * Displays the login error message.
+ */
+function showLoginError() {
+    const msgBox = document.getElementById('msgBox');
+    if (msgBox) msgBox.classList.remove('d-none');
 }
