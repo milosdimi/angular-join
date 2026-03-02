@@ -4,6 +4,7 @@ let editingTaskId = null;
 let newTaskStatus = 'todo'; // Standard Status
 let contacts = [];
 let assignedContacts = [];
+let messageTimeout = null;
 
 /**
  * Initializes the add task page.
@@ -203,7 +204,8 @@ function getTaskData() {
 function redirectToBoard() {
     if (window.location.pathname.includes('board.html')) {
         setTimeout(async () => {
-            closeAddTaskModal();
+            if (typeof closeAddTaskModal === 'function') closeAddTaskModal();
+            if (typeof closeTaskDetails === 'function') closeTaskDetails();
             await loadTasks(); 
             renderBoard();
         }, 1000);
@@ -224,6 +226,7 @@ async function saveEditedTask() {
     if (taskIndex !== -1) {
         updateTaskObject(tasks[taskIndex]);
         await localStorage.setItem('tasks', JSON.stringify(tasks));
+        showTaskAddedMessage('Task updated');
         redirectToBoard();
     }
 }
@@ -331,10 +334,20 @@ function clearSubtaskInput() {
 /**
  * Shows a confirmation message when a task is added.
  */
-function showTaskAddedMessage() {
+function showTaskAddedMessage(text = 'Task added to board') {
     const msgElement = document.getElementById('taskAddedMsg');
     if (msgElement) {
+        if (messageTimeout) clearTimeout(messageTimeout);
+
+        msgElement.innerHTML = `${text} <img src="assets/img/board-icon.svg" alt="">`;
+        
+        msgElement.classList.add('d-none');
+        void msgElement.offsetWidth; 
         msgElement.classList.remove('d-none');
+
+        messageTimeout = setTimeout(() => {
+            msgElement.classList.add('d-none');
+        }, 2000);
     }
 }
 
