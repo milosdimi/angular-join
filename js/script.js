@@ -5,6 +5,7 @@
 async function init() {
     await includeHTML();
     checkAuth();
+    checkCookieConsent(); 
     highlightActiveMenu();
 }
 
@@ -110,3 +111,25 @@ window.addEventListener('click', function (event) {
         }
     }
 });
+
+/**
+ * Checks if the user has accepted cookies. If not, displays a banner.
+ */
+function checkCookieConsent() {
+    if (!localStorage.getItem('cookieConsent')) {
+        document.body.insertAdjacentHTML('beforeend', generateCookieBannerHTML());
+    }
+}
+
+/**
+ * Saves cookie consent and removes the banner.
+ */
+function acceptCookies() {
+    localStorage.setItem('cookieConsent', 'true');
+    document.getElementById('cookie-banner').remove();
+}
+
+function declineCookies() {
+    localStorage.setItem('cookieConsent', 'false');
+    document.getElementById('cookie-banner').remove();
+}

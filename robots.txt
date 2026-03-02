@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /assets/templates/
+Sitemap: https://join.dimit.cc/sitemap.xml

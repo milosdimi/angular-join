@@ -422,3 +422,19 @@ function generateContactOptionHTML(contact, index, isSelected) {
         </div>
     `;
 }
+
+/**
+ * Generates HTML for the cookie consent banner.
+ * @returns {string} HTML string.
+ */
+function generateCookieBannerHTML() {
+    return /*html*/`
+        <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #2A3647; color: white; padding: 20px; text-align: center; z-index: 9999; display: flex; justify-content: center; align-items: center; gap: 20px; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); flex-wrap: wrap;">
+            <span style="font-size: 16px;">We use cookies to ensure you get the best experience on our website. <a href="privacy-policy.html" style="color: #29ABE2; text-decoration: underline;">Privacy Policy</a></span>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="acceptCookies()" style="background: #29ABE2; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">Accept</button>
+                <button onclick="declineCookies()" style="background: transparent; color: white; border: 1px solid white; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px;">Decline</button>
+            </div>
+        </div>
+    `;
+}
